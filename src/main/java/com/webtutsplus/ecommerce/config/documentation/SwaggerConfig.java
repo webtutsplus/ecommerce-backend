@@ -20,7 +20,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
         		.apiInfo(getApiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.gulraiz"))
+                .apis(RequestHandlerSelectors.basePackage("com.webtutsplus.ecommerce"))
                 .paths(PathSelectors.any())
                 .build();
     }
