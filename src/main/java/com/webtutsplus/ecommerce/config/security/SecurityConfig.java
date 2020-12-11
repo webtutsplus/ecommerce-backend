@@ -33,7 +33,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	@Override
 	public void configure(WebSecurity registry) throws Exception {
 		registry.ignoring()
-		.antMatchers("/docs/**").antMatchers("/actuator/**").antMatchers("/v2/api-docs", "/configuration/ui",
-				"/swagger-resources/**", "/configuration/security", "/swagger-ui.html", "/webjars/**");
+		.antMatchers("/docs/**")
+        .antMatchers("/actuator/**")
+        .antMatchers(
+                "/v2/api-docs",
+                "/configuration/ui",
+				"/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**");
+        //.antMatchers("/product/**");
 	}
 }
