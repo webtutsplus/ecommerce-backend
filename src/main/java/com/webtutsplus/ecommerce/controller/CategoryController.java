@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.webtutsplus.ecommerce.common.ApiResponse;
 import com.webtutsplus.ecommerce.model.Category;
 import com.webtutsplus.ecommerce.service.CategoryService;
 
@@ -30,18 +31,22 @@ public class CategoryController {
     }
 	
 	@PostMapping("/create")
-	public String createCategory(@Valid @RequestBody Category category) {
+	public ResponseEntity<ApiResponse> createCategory(@Valid @RequestBody Category category) {
 		if (cs.readCategory(category.getCategoryName()) != null) {
-			return "CATEGORY_ALREADY_EXISTS";
+			return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category already exists"), HttpStatus.CONFLICT);
 		}
 		
 		cs.createCategory(category);
-		return "SUCCESS";
+		return new ResponseEntity<ApiResponse>(new ApiResponse(true, "created the category"), HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/read")
-	public Category readCategory(@RequestBody long categoryId) {
-		return cs.readCategory(categoryId);
+	public ResponseEntity<Category> readCategory(@RequestBody long categoryId) {
+		Category c = cs.readCategory(categoryId);
+		if (c != null)
+			return new ResponseEntity<Category>(c, HttpStatus.OK);
+		
+		return new ResponseEntity<Category>(c, HttpStatus.NOT_FOUND);
 	}
 
 }
