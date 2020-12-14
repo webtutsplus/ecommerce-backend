@@ -1,4 +1,6 @@
-package com.webtutsplus.ecommerce.services;
+package com.webtutsplus.ecommerce.service;
+
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +17,10 @@ public class CategoryService {
 	
 	public CategoryService(Categoryrepository cr) {
 		this.cr = cr;
+	}
+	
+	public List<Category> listCategories() {
+		return cr.findAll();
 	}
 	
 	public void createCategory(Category category) {
