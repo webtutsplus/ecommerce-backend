@@ -13,7 +13,8 @@
 	<groupId>com.survey</groupId>
 	<artifactId>ecommerce-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<!-- <packaging>war</packaging> -->
+	<packaging>jar</packaging>
 	<name>ecommerce-backend</name>
 	<description>ecommerce</description>
 
