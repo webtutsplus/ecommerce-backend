@@ -26,7 +26,7 @@ public class SwaggerConfig {
     }
 	
 	private ApiInfo getApiInfo() {
-        Contact contact = new Contact("Gulraiz Javed", "http://tallymarksconsulting.com", "gulraiz.javed@tallymarksconsulting.com");
+        Contact contact = new Contact("webtutsplus", "http://webtutsplus.com", "contact.webtutsplus@gmail.com");
         return new ApiInfoBuilder()
                 .title("User Profile API")
                 .description("Documentation User profile api")
