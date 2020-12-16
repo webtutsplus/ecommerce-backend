@@ -7,3 +7,7 @@
 ###How to run in local
 - change application properties according to local mysql
 - after starting application, go to http://localhost:8080/swagger-ui.html#/
+
+##How to use prod profile
+mvn package
+java -jar -Dspring.profiles.active=prod <package name in target>
