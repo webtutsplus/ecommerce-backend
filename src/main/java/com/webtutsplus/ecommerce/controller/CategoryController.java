@@ -19,6 +19,7 @@ import com.webtutsplus.ecommerce.service.CategoryService;
 
 @RestController
 @RequestMapping("/category")
+
 public class CategoryController {
 	
 	@Autowired
