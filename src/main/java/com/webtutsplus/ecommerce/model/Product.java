@@ -1,32 +1,42 @@
 package com.webtutsplus.ecommerce.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
 @Table(name = "products")
 public class Product {
-    private @GeneratedValue @Id long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private @NotNull String name;
     private @NotNull String imageURL;
     private @NotNull double price;
     private @NotNull String description;
 
-    Product() {}
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    Category category;
 
-    public Product(String name, String imageURL, double price, String description) {
+    public Product() {
+    }
+
+    public Product(String name, String imageURL, double price, String description, Category category) {
         super();
         this.name = name;
         this.imageURL = imageURL;
         this.price = price;
         this.description = description;
+        this.category = category;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -62,17 +72,16 @@ public class Product {
         this.description = description;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
-        Product product = (Product) o;
-        return id == product.id && Double.compare(product.price, price) == 0 && Objects.equals(name, product.name) && Objects.equals(imageURL, product.imageURL) && Objects.equals(description, product.description);
+    public Category getCategory() {
+        return category;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, imageURL, price, description);
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

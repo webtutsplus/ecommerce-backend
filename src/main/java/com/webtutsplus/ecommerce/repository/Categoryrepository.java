@@ -8,8 +8,6 @@ import com.webtutsplus.ecommerce.model.Category;
 @Repository
 public interface Categoryrepository extends JpaRepository<Category, Long> {
 	
-	public Category findByCategoryId(long categoryId);
-	
-	public Category findByCategoryName(String categoryName);
+	Category findByCategoryName(String categoryName);
 	
 }
