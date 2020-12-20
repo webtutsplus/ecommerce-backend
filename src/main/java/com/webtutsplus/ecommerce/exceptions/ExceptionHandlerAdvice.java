@@ -1,4 +1,4 @@
-package com.webtutsplus.ecommerce.exception;
+package com.webtutsplus.ecommerce.exceptions;
 
 import com.webtutsplus.ecommerce.common.ApiResponse;
 import org.springframework.core.NestedExceptionUtils;

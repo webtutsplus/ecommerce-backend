@@ -22,3 +22,8 @@ cd ecommerce
 sh run.sh 
 
 you should see the swagger UI in http://167.99.44.132:8080/api/swagger-ui.html
+
+#admin access
+email: admin@gmail.com
+password: admin
+firstname: admin
