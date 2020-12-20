@@ -17,6 +17,7 @@ public class Category {
 	public Category() {
 		
 	}
+
 	
 	public Category(@NotBlank String categoryName, @NotBlank String description) {
 		this.categoryName = categoryName;
