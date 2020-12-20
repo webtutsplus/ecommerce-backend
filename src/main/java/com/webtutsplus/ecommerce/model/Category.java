@@ -17,6 +17,8 @@ public class Category {
 
 	private @NotBlank String description;
 
+	private @NotBlank String imageUrl;
+
 	// add imageURL here
 
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY,
@@ -63,6 +65,21 @@ public class Category {
 	@Override
 	public String toString() {
 		return "User {category id=" + id + ", category name='" + categoryName + "', description='" + description + "'}";
-	}	
- 	
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
