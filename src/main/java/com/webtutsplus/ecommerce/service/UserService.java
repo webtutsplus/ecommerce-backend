@@ -40,7 +40,7 @@ public class UserService {
 
 
     public ResponseDto signUp(SignupDto signupDto)  throws CustomException {
-
+        // first encrypt the password
         String encryptedPassword = signupDto.getPassword();
         try {
             encryptedPassword = hashPassword(signupDto.getPassword());
@@ -54,9 +54,13 @@ public class UserService {
 
         User createdUser;
         try {
+            // save the User
             createdUser = userRepository.save(user);
+            // generate token for user
             final AuthenticationToken authenticationToken = new AuthenticationToken(createdUser);
+            // save token in database
             authenticationService.saveConfirmationToken(authenticationToken);
+            // success in creating
             return new ResponseDto(ResponseStatus.success.toString(), USER_CREATED);
         } catch (Exception e) {
             // handle signup error
