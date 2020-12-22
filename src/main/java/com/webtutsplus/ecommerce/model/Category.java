@@ -34,9 +34,12 @@ public class Category {
 		this.description = description;
 	}
 
-	public long getCategoryId() {
-		return id;
+	public Category(@NotBlank String categoryName, @NotBlank String description, @NotBlank String imageUrl) {
+		this.categoryName = categoryName;
+		this.description = description;
+		this.imageUrl = imageUrl;
 	}
+
 
 	public String getCategoryName() {
 		return categoryName;
