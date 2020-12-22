@@ -42,8 +42,6 @@ public class FileUploadController {
         }).collect(Collectors.toList());
 
         Stream<Path> pathStream = fileStoreService.loadAll();
-
-
         return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
     }
 
