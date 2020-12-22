@@ -30,21 +30,8 @@ public class FileUploadController {
         return fileStoreService.store(file);
     }
 
+
     @GetMapping("/")
-    public ResponseEntity listUploadedFiles(Model model) throws IOException {
-
-        List<FileInfo> fileInfos = fileStoreService.loadAll().map(path -> {
-            String filename = path.getFileName().toString();
-            String url = MvcUriComponentsBuilder
-                    .fromMethodName(FileUploadController.class, "getFile", path.getFileName().toString()).build().toString();
-
-            return new FileInfo(filename, url);
-        }).collect(Collectors.toList());
-
-        return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
-    }
-
-    @GetMapping("/files")
     public ResponseEntity<List<FileInfo>> getListFiles() {
         List<FileInfo> fileInfos = fileStoreService.loadAll().map(path -> {
             String filename = path.getFileName().toString();
