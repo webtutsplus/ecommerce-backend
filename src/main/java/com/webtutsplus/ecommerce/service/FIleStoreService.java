@@ -47,7 +47,7 @@ public class FIleStoreService {
                 final String baseUrl =
                         ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
 
-                return baseUrl+"/images/"+uploadedFileName;
+                return baseUrl+"/fileUpload/files/"+uploadedFileName;
             }
         }
         catch (IOException e) {
