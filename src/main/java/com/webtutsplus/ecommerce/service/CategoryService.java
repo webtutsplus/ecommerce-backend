@@ -35,5 +35,14 @@ public class CategoryService {
 	public Optional<Category> readCategory(Long categoryId) {
 		return categoryrepository.findById(categoryId);
 	}
-	
+
+	public void updateCategory(Long categoryID, Category newCategory) {
+		Category category = categoryrepository.findById(categoryID).get();
+		category.setCategoryName(newCategory.getCategoryName());
+		category.setDescription(newCategory.getDescription());
+		category.setProducts(newCategory.getProducts());
+		category.setImageUrl(newCategory.getImageUrl());
+
+		categoryrepository.save(category);
+	}
 }
