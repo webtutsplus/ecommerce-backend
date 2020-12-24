@@ -7,6 +7,7 @@ import com.webtutsplus.ecommerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,12 +22,19 @@ public class ProductService {
         oldProduct.setImageURL(newProduct.getImageURL());
         oldProduct.setPrice(newProduct.getPrice());
         oldProduct.setDescription(newProduct.getDescription());
-
         productRepository.save(oldProduct);
     }
 
-    public List<Product> listProducts() {
-        return productRepository.findAll();
+    public List<ProductDto> listProducts() {
+        List<Product> products = productRepository.findAll();
+        // TODO
+        // change product to product DTO
+        List<ProductDto> productDtos = new ArrayList<>();
+        for (Product product: products) {
+            // create product dto from product
+            // add in the list
+        }
+        return productDtos;
     }
 
     public static Product getProductFromDto(ProductDto productDto, Category category) {
