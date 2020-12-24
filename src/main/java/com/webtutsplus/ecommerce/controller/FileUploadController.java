@@ -25,26 +25,36 @@ public class FileUploadController {
     @Autowired
     FIleStoreService fileStoreService;
 
+    //upload a file
     @PostMapping("/")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) {
         return fileStoreService.store(file);
     }
 
 
+    // get all the files
     @GetMapping("/")
     public ResponseEntity<List<FileInfo>> getListFiles() {
-        List<FileInfo> fileInfos = fileStoreService.loadAll().map(path -> {
+
+        // first get a stream of all file path present in root file directory
+        Stream<Path> pathStream =  fileStoreService.loadAll();
+
+        List<FileInfo> fileInfos = pathStream.map(path -> {
+            // get file name
             String filename = path.getFileName().toString();
+
+            // use function to get one file to build the URL
             String url = MvcUriComponentsBuilder
                     .fromMethodName(FileUploadController.class, "getFile", path.getFileName().toString()).build().toString();
-
+            // make a fileinfo object  from filename and url
             return new FileInfo(filename, url);
+
         }).collect(Collectors.toList());
 
-        Stream<Path> pathStream = fileStoreService.loadAll();
         return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
     }
 
+    // get file by filename
     @GetMapping("/files/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = fileStoreService.load(filename);

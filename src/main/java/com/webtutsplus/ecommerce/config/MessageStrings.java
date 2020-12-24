@@ -1,6 +1,6 @@
 package com.webtutsplus.ecommerce.config;
 
-public class MessageStrings {
+    public class MessageStrings {
 
     public static final String USER_NOT_PERMITTED = "user is not permitted to perform this operation";
     public static final String AUTH_TOEKN_NOT_PRESENT = "authentication token not present";
