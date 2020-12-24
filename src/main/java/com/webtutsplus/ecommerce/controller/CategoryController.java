@@ -30,21 +30,29 @@ public class CategoryController {
     }
 
 	/**
-	 * Handles POST requests to /api/category/create.
-	 * @param category
-	 * @return
+	 * Handles POST requests to /api/category/create. Function is used to create new Categories.
+	 * @param category A valid object of type Category.
+	 * @return Returns a response entity generated using ApiResponse object.
 	 */
 	@PostMapping("/create")
 	public ResponseEntity<ApiResponse> createCategory(@Valid @RequestBody Category category) {
+		// Check to see if the category already exists. If it does then return an error stating that the category
+		// already exists.
 		if (categoryService.readCategory(category.getCategoryName()).isPresent()) {
 			return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category already exists"), HttpStatus.CONFLICT);
 		}
-		
+
+		// Pass the Category object to the category service to handle adding it to the database.
 		categoryService.createCategory(category);
 		return new ResponseEntity<ApiResponse>(new ApiResponse(true, "created the category"), HttpStatus.CREATED);
 	}
 
-	//TODO create an UPDATE method Giridhar
+	/**
+	 * Handles POST requests to /api/category/update/<categoryID>.
+	 * @param categoryID The ID of the category you wish to update.
+	 * @param category The new category object you wish to use.
+	 * @return Returns a response entity generated using ApiResponse object.
+	 */
 	@PostMapping("/update/<categoryID>")
 	public ResponseEntity<ApiResponse> updateCategory(@PathVariable("category") long categoryID, @Valid @RequestBody Category category) {
 		// Check to see if the category exists.
