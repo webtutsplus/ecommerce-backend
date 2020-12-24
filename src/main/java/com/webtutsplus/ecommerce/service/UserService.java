@@ -78,7 +78,7 @@ public class UserService {
         try {
             // check if password is right
             if (!user.getPassword().equals(hashPassword(signInDto.getPassword()))){
-                // passowrd doesnot match
+                // passowrd does not match
                 return new SignInResponseDto(MessageStrings.WRONG_PASSWORD, null);
             }
         } catch (NoSuchAlgorithmException e) {

@@ -12,6 +12,10 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * Swagger configuration object to allow for dynamically generated documentation
+ * using Swagger 2.
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {

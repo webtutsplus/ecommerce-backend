@@ -7,6 +7,7 @@ package com.webtutsplus.ecommerce.config.security;
 //import org.springframework.security.config.annotation.web.builders.WebSecurity;
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+// TODO: Add documentation for security config.
 //@Configuration
 public class SecurityConfig //extends WebSecurityConfigurerAdapter
 {

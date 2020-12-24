@@ -5,9 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.webtutsplus.ecommerce.model.Category;
 
+import java.util.Optional;
+
 @Repository
 public interface Categoryrepository extends JpaRepository<Category, Long> {
-	
-	Category findByCategoryName(String categoryName);
+
+	Optional<Category> findByCategoryName(String categoryName);
 	
 }

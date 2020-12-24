@@ -2,6 +2,7 @@ package com.webtutsplus.ecommerce.common;
 
 import java.util.List;
 
+// TODO: Add documentation to this object.
 public class PagedList<T> {
 	private int totalPages;
 	private long totalElements;

@@ -92,6 +92,7 @@ public class Product {
                 ", imageURL='" + imageURL + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
                 '}';
     }
 }
