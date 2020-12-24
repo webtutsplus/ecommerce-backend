@@ -35,7 +35,7 @@ public class ProductController {
     /**
      * Handles POST requests for /api/product/add. Its responsible for adding new products.
      * @param productDto It receives a ProductDTO (Product Data Transfer Object) object.
-     * @return Returns a Response Entity containing an ApiResponse object.
+     * @return Returns a Response Entity containing an Api Response object.
      */
     @PostMapping("/add")
     public ResponseEntity<ApiResponse> addProduct(@RequestBody ProductDto productDto) {
@@ -53,13 +53,25 @@ public class ProductController {
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Product has been added"), HttpStatus.CREATED);
     }
 
-    //
-    @PostMapping("/update/{productID}")
+    /**
+     * Handles POST requests for /api/product/update/<productID>. This function is responsible for updating
+     * the products currently saved in our database.
+     * @param productID The ID of the product we want to update.
+     * @param productDto A Product Data Transfer Object that we want to replace the previous product with.
+     * @return Returns a Response Entity containing an Api Response object.
+     */
+    @PostMapping("/update/<productID>")
     public ResponseEntity<ApiResponse> updateProduct(@PathVariable("productID") long productID, @RequestBody @Valid ProductDto productDto) {
+        // Get a reference to category in the object. It might return null so it must be checked before updating the
+        // product.
         Optional<Category> optionalCategory = categoryService.readCategory(productDto.getCategoryId());
         if (!optionalCategory.isPresent()) {
+            // If the product does not contain a valid category send back an error.
             return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category is invalid"), HttpStatus.CONFLICT);
         }
+
+        // Send the productID, productDto and category to the update function that handles the interaction with the
+        // database, and return a response of success.
         Category category = optionalCategory.get();
         productService.updateProduct(productID, productDto, category);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Product has been updated"), HttpStatus.OK);
