@@ -40,6 +40,11 @@ public class UserService {
 
 
     public ResponseDto signUp(SignupDto signupDto)  throws CustomException {
+        // Check to see if the current email address has already been registered.
+        if (Helper.notNull(userRepository.findByEmail(signupDto.getEmail()))) {
+            // If the email address has been registered then throw an exception.
+            throw new CustomException("User already exists");
+        }
         // first encrypt the password
         String encryptedPassword = signupDto.getPassword();
         try {
