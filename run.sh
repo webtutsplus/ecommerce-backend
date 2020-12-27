@@ -1,4 +1,4 @@
-git checkout master
+git checkout nilmadhab/product-category-link
 git pull
 sudo kill -9 `sudo lsof -t -i:8080`
 mvn package -DskipTests=true
