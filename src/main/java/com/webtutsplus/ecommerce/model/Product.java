@@ -1,6 +1,7 @@
 package com.webtutsplus.ecommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.webtutsplus.ecommerce.dto.ProductDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -24,7 +25,12 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     Category category;
 
-    public Product() {
+    public Product(ProductDto productDto, Category category) {
+        this.name = productDto.getName();
+        this.imageURL = productDto.getImageURL();
+        this.description = productDto.getDescription();
+        this.price = productDto.getPrice();
+        this.category = category;
     }
 
     public Product(String name, String imageURL, double price, String description, Category category) {
@@ -36,8 +42,15 @@ public class Product {
         this.category = category;
     }
 
+    public Product() {
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -78,10 +91,6 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     @Override

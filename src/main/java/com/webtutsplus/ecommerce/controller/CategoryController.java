@@ -33,14 +33,13 @@ public class CategoryController {
 		if (Helper.notNull(categoryService.readCategory(category.getCategoryName()))) {
 			return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category already exists"), HttpStatus.CONFLICT);
 		}
-		
 		categoryService.createCategory(category);
 		return new ResponseEntity<ApiResponse>(new ApiResponse(true, "created the category"), HttpStatus.CREATED);
 	}
 
 	//TODO create an UPDATE method Giridhar
-	@PostMapping("/update/<categoryID>")
-	public ResponseEntity<ApiResponse> updateCategory(@PathVariable("category") long categoryID, @Valid @RequestBody Category category) {
+	@PostMapping("/update/{categoryID}")
+	public ResponseEntity<ApiResponse> updateCategory(@PathVariable("categoryID") long categoryID, @Valid @RequestBody Category category) {
 		// Check to see if the category exists.
 		if (Helper.notNull(categoryService.readCategory(category.getCategoryName()))) {
 			// If the category exists then update it.
