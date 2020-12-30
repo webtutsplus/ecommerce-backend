@@ -68,11 +68,10 @@ public class UserController {
 //        return userService.updateUser(token, userUpdateDto);
 //    }
 
-
-    @PostMapping("/createUser")
-    public ResponseDto updateUser(@RequestParam("token") String token, @RequestBody UserCreateDto userCreateDto)
-            throws CustomException, AuthenticationFailException {
-        authenticationService.authenticate(token);
-        return userService.createUser(token, userCreateDto);
-    }
+//    @PostMapping("/createUser")
+//    public ResponseDto updateUser(@RequestParam("token") String token, @RequestBody UserCreateDto userCreateDto)
+//            throws CustomException, AuthenticationFailException {
+//        authenticationService.authenticate(token);
+//        return userService.createUser(token, userCreateDto);
+//    }
 }
