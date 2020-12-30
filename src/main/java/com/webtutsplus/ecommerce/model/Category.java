@@ -26,7 +26,6 @@ public class Category {
 	Set<Product> products;
 	
 	public Category() {
-		
 	}
 	
 	public Category(@NotBlank String categoryName, @NotBlank String description) {
@@ -39,7 +38,6 @@ public class Category {
 		this.description = description;
 		this.imageUrl = imageUrl;
 	}
-
 
 	public String getCategoryName() {
 		return categoryName;
