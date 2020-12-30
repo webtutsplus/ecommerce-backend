@@ -7,6 +7,7 @@ import com.webtutsplus.ecommerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,12 +28,18 @@ public class ProductService {
 
     public List<ProductDto> listProducts() {
         List<Product> products = productRepository.findAll();
-        // TODO
-        // change product to product DTO
+
         List<ProductDto> productDtos = new ArrayList<>();
         for (Product product: products) {
-            // create product dto from product
-            // add in the list
+            String name = product.getName();
+            String imageURL = product.getImageURL();
+            double price = product.getPrice();
+            String description = product.getDescription();
+            Long categoryId = product.getCategory().getId();
+
+            ProductDto productDto = new ProductDto(name, imageURL, price, description, categoryId);
+
+            productDtos.add(productDto);
         }
         return productDtos;
     }
