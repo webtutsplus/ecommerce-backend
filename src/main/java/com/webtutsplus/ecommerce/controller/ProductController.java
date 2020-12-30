@@ -27,9 +27,9 @@ public class ProductController {
      * @return Returns a list of all current products.
      */
     @GetMapping("/")
-    public ResponseEntity<List<Product>> getProducts() {
-        List<Product> body = productService.listProducts();
-        return new ResponseEntity<List<Product>>(body, HttpStatus.OK);
+    public ResponseEntity<List<ProductDto>> getProducts() {
+        List<ProductDto> body = productService.listProducts();
+        return new ResponseEntity<List<ProductDto>>(body, HttpStatus.OK);
     }
 
     /**

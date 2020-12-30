@@ -45,7 +45,7 @@ public class UserService {
             // If the email address has been registered then throw an exception.
             throw new CustomException("User already exists");
         }
-
+        // first encrypt the password
         String encryptedPassword = signupDto.getPassword();
         try {
             encryptedPassword = hashPassword(signupDto.getPassword());
@@ -59,9 +59,13 @@ public class UserService {
 
         User createdUser;
         try {
+            // save the User
             createdUser = userRepository.save(user);
+            // generate token for user
             final AuthenticationToken authenticationToken = new AuthenticationToken(createdUser);
+            // save token in database
             authenticationService.saveConfirmationToken(authenticationToken);
+            // success in creating
             return new ResponseDto(ResponseStatus.success.toString(), USER_CREATED);
         } catch (Exception e) {
             // handle signup error
@@ -78,7 +82,7 @@ public class UserService {
         try {
             // check if password is right
             if (!user.getPassword().equals(hashPassword(signInDto.getPassword()))){
-                // passowrd does not match
+                // passowrd doesnot match
                 return new SignInResponseDto(MessageStrings.WRONG_PASSWORD, null);
             }
         } catch (NoSuchAlgorithmException e) {

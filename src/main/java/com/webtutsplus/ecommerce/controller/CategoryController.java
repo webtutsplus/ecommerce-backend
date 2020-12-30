@@ -16,47 +16,32 @@ import com.webtutsplus.ecommerce.service.CategoryService;
 
 @RestController
 @RequestMapping("/category")
-public class CategoryController {
-	private @Autowired CategoryService categoryService;
 
-	/**
-	 * Handles GET requests to /api/category/.
-	 * @return Returns a list of all the current categories.
-	 */
+public class CategoryController {
+	
+	@Autowired
+	private CategoryService categoryService;
+	
 	@GetMapping("/")
     public ResponseEntity<List<Category>> getCategories() {
         List<Category> body = categoryService.listCategories();
         return new ResponseEntity<List<Category>>(body, HttpStatus.OK);
     }
-
-	/**
-	 * Handles POST requests to /api/category/create. Function is used to create new Categories.
-	 * @param category A valid object of type Category.
-	 * @return Returns a response entity generated using ApiResponse object.
-	 */
+	
 	@PostMapping("/create")
 	public ResponseEntity<ApiResponse> createCategory(@Valid @RequestBody Category category) {
-		// Check to see if the category already exists. If it does then return an error stating that the category
-		// already exists.
-		if (categoryService.readCategory(category.getCategoryName()).isPresent()) {
+		if (Helper.notNull(categoryService.readCategory(category.getCategoryName()))) {
 			return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category already exists"), HttpStatus.CONFLICT);
 		}
-
-		// Pass the Category object to the category service to handle adding it to the database.
 		categoryService.createCategory(category);
 		return new ResponseEntity<ApiResponse>(new ApiResponse(true, "created the category"), HttpStatus.CREATED);
 	}
 
-	/**
-	 * Handles POST requests to /api/category/update/<categoryID>.
-	 * @param categoryID The ID of the category you wish to update.
-	 * @param category The new category object you wish to use.
-	 * @return Returns a response entity generated using ApiResponse object.
-	 */
-	@PostMapping("/update/<categoryID>")
-	public ResponseEntity<ApiResponse> updateCategory(@PathVariable("category") long categoryID, @Valid @RequestBody Category category) {
+	//TODO create an UPDATE method Giridhar
+	@PostMapping("/update/{categoryID}")
+	public ResponseEntity<ApiResponse> updateCategory(@PathVariable("categoryID") long categoryID, @Valid @RequestBody Category category) {
 		// Check to see if the category exists.
-		if (categoryService.readCategory(category.getCategoryName()).isPresent()) {
+		if (Helper.notNull(categoryService.readCategory(category.getCategoryName()))) {
 			// If the category exists then update it.
 			categoryService.updateCategory(categoryID, category);
 			return new ResponseEntity<ApiResponse>(new ApiResponse(true, "updated the category"), HttpStatus.OK);
