@@ -85,10 +85,18 @@ public class Category {
 		return products;
 	}
 
+	/**
+	 * Used to set the set of products in the category.
+	 * @param products the new set of products in the category.
+	 */
 	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
 
+	/**
+	 * Used to create a string containing information about the object.
+	 * @return a string made up of information about the object.
+	 */
 	@Override
 	public String toString() {
 		return "User {category id=" + id + ", category name='" + categoryName + "', description='" + description + "'}";
@@ -102,6 +110,10 @@ public class Category {
 		return imageUrl;
 	}
 
+	/**
+	 * Used to set the description of the category.
+	 * @param imageUrl the new description of the category.
+	 */
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
@@ -114,6 +126,10 @@ public class Category {
 		return id;
 	}
 
+	/**
+	 * Used to set the ID of the category.
+	 * @param id the new ID of the category.
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
