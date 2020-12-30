@@ -1,19 +1,30 @@
 package com.webtutsplus.ecommerce.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.webtutsplus.ecommerce.model.Product;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 public class ProductDto {
 
+    private Long id;
     private @NotNull String name;
     private @NotNull String imageURL;
     private @NotNull double price;
     private @NotNull String description;
-
-    @JsonProperty("category_id")
     private @NotNull Long categoryId;
 
+    public ProductDto(Product product) {
+        this.setId(product.getId());
+        this.setName(product.getName());
+        this.setImageURL(product.getImageURL());
+        this.setDescription(product.getDescription());
+        this.setPrice(product.getPrice());
+        this.setCategoryId(product.getCategory().getId());
+    }
 
     public ProductDto(@NotNull String name, @NotNull String imageURL, @NotNull double price, @NotNull String description, @NotNull Long categoryId) {
         this.name = name;
@@ -24,6 +35,14 @@ public class ProductDto {
     }
 
     public ProductDto() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
