@@ -28,54 +28,14 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    /**
+     * Constructor for the User object.
+     * @param firstName The first name of the user.
+     * @param lastName The last name of the user.
+     * @param email The user's email address.
+     * @param role The user's role.
+     * @param password The user's password.
+     */
     public User(String firstName, String lastName, String email, Role role, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -84,6 +44,104 @@ public class User {
         this.password = password;
     }
 
-    public User() {
+    /**
+     * Default constructor of the User object.
+     */
+    public User() {}
+
+    /**
+     * Used to get the ID of the user.
+     * @return The user ID of type Integer.
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * Used to set the user's ID.
+     * @param id The user's new ID.
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * Used to get the first name of the user.
+     * @return The user's first name of type String.
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * Used to set the user's first name.
+     * @param firstName The user's new first name.
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * Used to get the last name of the user.
+     * @return The user's last name of type String.
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Used to set the user's last name.
+     * @param lastName The user's new last name.
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * Used to get the email address of the user.
+     * @return The user's email address of type String.
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Used to set the user's email address.
+     * @param email The user's new email address.
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * Used to get the role of the user.
+     * @return The user's role of type Role.
+     */
+    public Role getRole() {
+        return role;
+    }
+
+    /**
+     * Used to set the user's role.
+     * @param role The user's new role.
+     */
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    /**
+     * Used to get the password of the user.
+     * @return The user's password of type String.
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * Used to set the user's password.
+     * @param password The user's new password.
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
