@@ -29,24 +29,26 @@ import static com.webtutsplus.ecommerce.config.MessageStrings.USER_CREATED;
 
 @Service
 public class UserService {
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    AuthenticationService authenticationService;
-
+    @Autowired UserRepository userRepository;
+    @Autowired AuthenticationService authenticationService;
     Logger logger = LoggerFactory.getLogger(UserService.class);
 
-
-    public ResponseDto signUp(SignupDto signupDto)  throws CustomException {
+    /**
+     * Used to add a new user to the database.
+     * @param signupDto The signupDto, which we got from the front-end.
+     * @return A responseDto to send back to the front-end as a reply.
+     * @throws CustomException
+     */
+    public ResponseDto signUp(SignupDto signupDto) throws CustomException {
         // Check to see if the current email address has already been registered.
         if (Helper.notNull(userRepository.findByEmail(signupDto.getEmail()))) {
             // If the email address has been registered then throw an exception.
             throw new CustomException("User already exists");
         }
+
         // first encrypt the password
         String encryptedPassword = signupDto.getPassword();
+
         try {
             encryptedPassword = hashPassword(signupDto.getPassword());
         } catch (NoSuchAlgorithmException e) {
@@ -73,6 +75,12 @@ public class UserService {
         }
     }
 
+    /**
+     * Used to sign the user in.
+     * @param signInDto A signInDto, which we got from the front-end.
+     * @return A custom response object to reply to the front-end.
+     * @throws CustomException
+     */
     public SignInResponseDto signIn(SignInDto signInDto) throws CustomException {
         // first find User by email
         User user = userRepository.findByEmail(signInDto.getEmail());
@@ -82,7 +90,7 @@ public class UserService {
         try {
             // check if password is right
             if (!user.getPassword().equals(hashPassword(signInDto.getPassword()))){
-                // passowrd doesnot match
+                // password does not match
                 return new SignInResponseDto(MessageStrings.WRONG_PASSWORD, null);
             }
         } catch (NoSuchAlgorithmException e) {
@@ -101,16 +109,14 @@ public class UserService {
         return new SignInResponseDto ("success", token.getConfirmationToken());
     }
 
-
-    String hashPassword(String password) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(password.getBytes());
-        byte[] digest = md.digest();
-        String myHash = DatatypeConverter
-                .printHexBinary(digest).toUpperCase();
-        return myHash;
-    }
-
+    /**
+     * Used to create a new user with a specific role.
+     * @param token The login token for the current user.
+     * @param userCreateDto userCreateDto, which we got from the front-end.
+     * @return A custom response to send back to the front-end.
+     * @throws CustomException
+     * @throws AuthenticationFailException
+     */
     public ResponseDto createUser(String token, UserCreateDto userCreateDto) throws CustomException, AuthenticationFailException {
         User creatingUser = authenticationService.getUser(token);
         if (!canCrudUser(creatingUser.getRole())) {
@@ -139,14 +145,25 @@ public class UserService {
 
     }
 
-    boolean canCrudUser(Role role) {
+    /**
+     * Used to make sure that the person can create the new user.
+     * @param role The current user's role.
+     * @return A boolean result.
+     */
+    private boolean canCrudUser(Role role) {
         if (role == Role.admin || role == Role.manager) {
             return true;
         }
         return false;
     }
 
-    boolean canCrudUser(User userUpdating, Integer userIdBeingUpdated) {
+    /**
+     * Used to make sure that the person can create the new user.
+     * @param userUpdating The user we are updating.
+     * @param userIdBeingUpdated The user we're updating's ID.
+     * @return A boolean result.
+     */
+    private boolean canCrudUser(User userUpdating, Integer userIdBeingUpdated) {
         Role role = userUpdating.getRole();
         // admin and manager can crud any user
         if (role == Role.admin || role == Role.manager) {
@@ -157,5 +174,20 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Used to create a hash of the user's password.
+     * @param password The user's password that we want to hash.
+     * @return A string containing the hashed password.
+     * @throws NoSuchAlgorithmException
+     */
+    private String hashPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] digest = md.digest();
+        String myHash = DatatypeConverter
+                .printHexBinary(digest).toUpperCase();
+        return myHash;
     }
 }

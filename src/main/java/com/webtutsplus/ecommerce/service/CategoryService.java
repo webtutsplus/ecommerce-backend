@@ -18,7 +18,7 @@ public class CategoryService {
 	private final Categoryrepository categoryrepository;
 
 	/**
-	 * Pubblic constructor used for code injecting the category repository.
+	 * Public constructor used for code injecting the category repository.
 	 */
 	public CategoryService(Categoryrepository categoryrepository) {
 		this.categoryrepository = categoryrepository;

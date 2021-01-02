@@ -21,12 +21,14 @@ import java.util.stream.Stream;
 
 @Service
 public class FIleStoreService {
-
     private StorageProperties properties = new StorageProperties();
     Path rootLocation = Paths.get(properties.getLocation());
 
-
-
+    /**
+     * Used to save the file to the local storage.
+     * @param file The file that we want to save.
+     * @return The URL for where the file is saved.
+     */
     public String store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
@@ -49,12 +51,15 @@ public class FIleStoreService {
 
                 return baseUrl+"/fileUpload/files/"+uploadedFileName;
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new StorageException("Failed to store file.", e);
         }
     }
 
+    /**
+     * Used to load all the files currently saved.
+     * @return a stream of all the paths to files.
+     */
     public Stream<Path> loadAll() {
         try {
             return Files.walk(this.rootLocation, 1)
@@ -67,6 +72,11 @@ public class FIleStoreService {
 
     }
 
+    /**
+     * Used to load a given file according to it's filename.
+     * @param filename The name of the file we want to load.
+     * @return Resource from the file name.
+     */
     public Resource load(String filename) {
         try {
             Path file = rootLocation.resolve(filename);
