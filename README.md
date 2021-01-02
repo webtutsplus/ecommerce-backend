@@ -15,6 +15,7 @@ java -jar -Dspring.profiles.active=prod <package name in target>
 ##Run in prod with latest changes in master
 ssh root@167.99.37.15
 
+
 (use password: webTuts9plus)
 
 cd ecommerce
