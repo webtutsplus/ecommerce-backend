@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 public class ApiResponse {
 	private final boolean success;
 	private final String message;
-	// try again
 
 	/**
 	 * A response object that the server will send back to describe whether or not a

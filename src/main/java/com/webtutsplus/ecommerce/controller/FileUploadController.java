@@ -21,16 +21,22 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/fileUpload")
 public class FileUploadController {
+    @Autowired FIleStoreService fileStoreService;
 
-    @Autowired
-    FIleStoreService fileStoreService;
-
+    /**
+     * Handles POST requests to /api/fileUpload/. Used to upload files.
+     * @param file The file we want to upload.
+     * @return The URL where we saved the file.
+     */
     @PostMapping("/")
     public String handleFileUpload(@RequestParam("file") MultipartFile file) {
         return fileStoreService.store(file);
     }
 
-
+    /**
+     * Handles GET requests to /api/fileUpload/. Used to get a list of all files.
+     * @return A list of all the files.
+     */
     @GetMapping("/")
     public ResponseEntity<List<FileInfo>> getListFiles() {
         List<FileInfo> fileInfos = fileStoreService.loadAll().map(path -> {
@@ -45,6 +51,11 @@ public class FileUploadController {
         return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
     }
 
+    /**
+     * Handles GET request to /api/fileUpload/files/{filename:.+}. Used to download a file.
+     * @param filename The name of the file we want to download.
+     * @return The file that we want to download.
+     */
     @GetMapping("/files/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = fileStoreService.load(filename);

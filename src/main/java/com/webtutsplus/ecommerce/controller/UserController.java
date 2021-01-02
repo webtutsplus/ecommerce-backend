@@ -21,28 +21,41 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class UserController {
+    @Autowired UserRepository userRepository;
+    @Autowired AuthenticationService authenticationService;
+    @Autowired UserService userService;
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    AuthenticationService authenticationService;
-
-    @Autowired
-    UserService userService;
-
+    /**
+     * Handles GET requests to /api/user/all. Used to get a list of all the users.
+     * @param token The user's login token.
+     * @return A list of all known users.
+     * @throws AuthenticationFailException
+     */
     @GetMapping("/all")
     public List<User> findAllUser(@RequestParam("token") String token) throws AuthenticationFailException {
         authenticationService.authenticate(token);
         return userRepository.findAll();
     }
 
+    /**
+     * Handles POST requests to /api/user/signup. Used to sign a new user up.
+     * @param signupDto The signupDto from the front-end.
+     * @return A responseDto.
+     * @throws CustomException
+     */
     @PostMapping("/signup")
     public ResponseDto Signup(@RequestBody SignupDto signupDto) throws CustomException {
         return userService.signUp(signupDto);
     }
 
     //TODO token should be updated
+
+    /**
+     * Handles POST requests to /api/user/signIn. Used to sign in a user.
+     * @param signInDto A singInDto from the front-end.
+     * @return A SignInResponseDto.
+     * @throws CustomException
+     */
     @PostMapping("/signIn")
     public SignInResponseDto Signup(@RequestBody SignInDto signInDto) throws CustomException {
         return userService.signIn(signInDto);
