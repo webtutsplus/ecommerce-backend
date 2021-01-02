@@ -60,7 +60,7 @@ public class ProductController {
      * @param productDto A Product Data Transfer Object that we want to replace the previous product with.
      * @return Returns a Response Entity containing an Api Response object.
      */
-    @PostMapping("/update/<productID>")
+    @PostMapping("/update/{productID}")
     public ResponseEntity<ApiResponse> updateProduct(@PathVariable("productID") long productID, @RequestBody @Valid ProductDto productDto) {
         // Get a reference to category in the object. It might return null so it must be checked before updating the
         // product.
@@ -75,5 +75,16 @@ public class ProductController {
         Category category = optionalCategory.get();
         productService.updateProduct(productID, productDto, category);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Product has been updated"), HttpStatus.OK);
+    }
+
+    /**
+     * Handles DELETE requests to /api/product/delete/{productID}. Used to delete the product.
+     * @param productID The ID of the product you want to delete.
+     * @return Returns a Response Entity containing an Api Response object.
+     */
+    @DeleteMapping("/delete/{productID}")
+    public ResponseEntity<ApiResponse> deleteProduct(@PathVariable("productID") long productID) {
+        productService.deleteProduct(productID);
+        return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Product has been deleted"), HttpStatus.OK);
     }
 }
