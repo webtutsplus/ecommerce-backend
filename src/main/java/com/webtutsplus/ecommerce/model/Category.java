@@ -1,21 +1,31 @@
 package com.webtutsplus.ecommerce.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Table(name = "categories")
 public class Category {
 
-	private @Id @GeneratedValue long categoryId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(name = "category_name")
 	private @NotBlank String categoryName;
+
 	private @NotBlank String description;
+
+	private @NotBlank String imageUrl;
+
+	// add imageURL here
+
+	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY,
+			cascade = CascadeType.ALL)
+	Set<Product> products;
 	
 	public Category() {
-		
 	}
 	
 	public Category(@NotBlank String categoryName, @NotBlank String description) {
@@ -23,8 +33,10 @@ public class Category {
 		this.description = description;
 	}
 
-	public long getCategoryId() {
-		return categoryId;
+	public Category(@NotBlank String categoryName, @NotBlank String description, @NotBlank String imageUrl) {
+		this.categoryName = categoryName;
+		this.description = description;
+		this.imageUrl = imageUrl;
 	}
 
 	public String getCategoryName() {
@@ -42,29 +54,33 @@ public class Category {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Category))
-			return false;
-		Category other = (Category) obj;
-		
-		if (categoryName == null) {
-			if (other.categoryName != null)
-				return false;
-		} else if (!categoryName.equals(other.categoryName))
-			return false;
-		
-		return true;
+
+	public Set<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
 
 	@Override
 	public String toString() {
-		return "User {category id=" + categoryId + ", category name='" + categoryName + "', description='" + description + "'}";
-	}	
- 	
+		return "User {category id=" + id + ", category name='" + categoryName + "', description='" + description + "'}";
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
