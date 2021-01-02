@@ -77,13 +77,13 @@ public class UserService {
         // first find User by email
         User user = userRepository.findByEmail(signInDto.getEmail());
         if(!Helper.notNull(user)){
-            return new SignInResponseDto("user not present",null);
+            throw  new AuthenticationFailException("user not present");
         }
         try {
             // check if password is right
             if (!user.getPassword().equals(hashPassword(signInDto.getPassword()))){
                 // passowrd doesnot match
-                return new SignInResponseDto(MessageStrings.WRONG_PASSWORD, null);
+                throw  new AuthenticationFailException(MessageStrings.WRONG_PASSWORD);
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
