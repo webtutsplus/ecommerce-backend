@@ -1,5 +1,5 @@
 git stash
-git checkout nilmadhab/product-category-link
+git checkout master
 git pull
 sudo kill -9 `sudo lsof -t -i:8080`
 mvn package -DskipTests=true
