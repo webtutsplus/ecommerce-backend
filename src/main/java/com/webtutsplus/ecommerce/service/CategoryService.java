@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import com.webtutsplus.ecommerce.exceptions.CustomException;
 import org.springframework.stereotype.Service;
 
 import com.webtutsplus.ecommerce.model.Category;
@@ -15,13 +14,13 @@ import com.webtutsplus.ecommerce.repository.Categoryrepository;
 @Service
 @Transactional
 public class CategoryService {
-	private final Categoryrepository categoryrepository;
+	private final Categoryrepository categoryRepository;
 
 	/**
 	 * Public constructor used for code injecting the category repository.
 	 */
-	public CategoryService(Categoryrepository categoryrepository) {
-		this.categoryrepository = categoryrepository;
+	public CategoryService(Categoryrepository categoryRepository) {
+		this.categoryRepository = categoryRepository;
 	}
 
 	/**
@@ -29,7 +28,7 @@ public class CategoryService {
 	 * @return List of categories.
 	 */
 	public List<Category> listCategories() {
-		return categoryrepository.findAll();
+		return categoryRepository.findAll();
 	}
 
 	/**
@@ -37,7 +36,7 @@ public class CategoryService {
 	 * @param category Category object that you want to add to the database.
 	 */
 	public void createCategory(Category category) {
-		categoryrepository.save(category);
+		categoryRepository.save(category);
 	}
 
 	/**
@@ -46,7 +45,7 @@ public class CategoryService {
 	 * @return Returns an optional Category object. Might be null if there wasn't such a category.
 	 */
 	public Optional<Category> readCategory(String categoryName) {
-		return categoryrepository.findByCategoryName(categoryName);
+		return categoryRepository.findByCategoryName(categoryName);
 	}
 
 	/**
@@ -55,7 +54,7 @@ public class CategoryService {
 	 * @return Returns an optional Category object. Might be null if there wasn't such a category.
 	 */
 	public Optional<Category> readCategory(Long categoryId) {
-		return categoryrepository.findById(categoryId);
+		return categoryRepository.findById(categoryId);
 	}
 
 	/**
@@ -65,12 +64,25 @@ public class CategoryService {
 	 * @exception NoSuchElementException This function will throw an exception if if can't find the category by it's ID.
 	 */
 	public void updateCategory(Long categoryID, Category newCategory) throws NoSuchElementException {
-		Category category = categoryrepository.findById(categoryID).get();
+		Category category = categoryRepository.findById(categoryID).get();
 		category.setCategoryName(newCategory.getCategoryName());
 		category.setDescription(newCategory.getDescription());
 		category.setProducts(newCategory.getProducts());
 		category.setImageUrl(newCategory.getImageUrl());
 
-		categoryrepository.save(category);
+		categoryRepository.save(category);
+	}
+
+	/**
+	 * Used to delete a category using it's ID.
+	 * @param categoryID The ID of the category we want to delete.
+	 * @throws NoSuchElementException
+	 */
+	public void deleteCategory(Long categoryID) throws NoSuchElementException {
+		if (categoryRepository.existsById(categoryID)) {
+			categoryRepository.deleteById(categoryID);
+		} else {
+			throw new NoSuchElementException();
+		}
 	}
 }

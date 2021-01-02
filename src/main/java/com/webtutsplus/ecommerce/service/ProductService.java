@@ -1,6 +1,7 @@
 package com.webtutsplus.ecommerce.service;
 
 import com.webtutsplus.ecommerce.dto.ProductDto;
+import com.webtutsplus.ecommerce.exceptions.CustomException;
 import com.webtutsplus.ecommerce.model.Category;
 import com.webtutsplus.ecommerce.model.Product;
 import com.webtutsplus.ecommerce.repository.ProductRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ProductService {
@@ -58,6 +60,20 @@ public class ProductService {
         Product product = getProductFromDto(productDto, category);
         product.setId(productID);
         productRepository.save(product);
+    }
+
+    /**
+     * Used to delete an existing product using that product's ID.
+     * @param productId the ID of the product we want to delete.
+     * @exception NoSuchElementException
+     */
+    public void deleteProduct(long productId) throws NoSuchElementException {
+        // Check to make sure that product exists before deleting it.
+        if (productRepository.existsById(productId)) {
+            productRepository.deleteById(productId);
+        } else {
+            throw new NoSuchElementException();
+        }
     }
 
     /**
