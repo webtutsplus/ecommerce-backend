@@ -29,6 +29,7 @@ email: admin@gmail.com
 password: admin
 firstname: admin
 
+
 ##export database 
 mysqldump -u root -p ecommerce > database-dump.sql
 scp root@104.236.26.66:database-dump.sql .
