@@ -29,16 +29,16 @@ import static com.webtutsplus.ecommerce.config.MessageStrings.USER_CREATED;
 
 @Service
 public class UserService {
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    AuthenticationService authenticationService;
-
+    @Autowired UserRepository userRepository;
+    @Autowired AuthenticationService authenticationService;
     Logger logger = LoggerFactory.getLogger(UserService.class);
 
-
+    /**
+     * Used to sign a new user up.
+     * @param signupDto The sign up data transfer object containing the new user information.
+     * @return A custom response data trasnfer object.
+     * @throws CustomException
+     */
     public ResponseDto signUp(SignupDto signupDto)  throws CustomException {
         // Check to see if the current email address has already been registered.
         if (Helper.notNull(userRepository.findByEmail(signupDto.getEmail()))) {
@@ -73,6 +73,12 @@ public class UserService {
         }
     }
 
+    /**
+     * Used to sign the user into their account.
+     * @param signInDto The sign in data transfer object from the front-end.
+     * @return A custom response data transfer object.
+     * @throws CustomException
+     */
     public SignInResponseDto signIn(SignInDto signInDto) throws CustomException {
         // first find User by email
         User user = userRepository.findByEmail(signInDto.getEmail());
@@ -101,7 +107,12 @@ public class UserService {
         return new SignInResponseDto ("success", token.getConfirmationToken());
     }
 
-
+    /**
+     * Function used to create a password hash.
+     * @param password The user's password.
+     * @return A hashed password string.
+     * @throws NoSuchAlgorithmException
+     */
     String hashPassword(String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(password.getBytes());
@@ -111,6 +122,14 @@ public class UserService {
         return myHash;
     }
 
+    /**
+     * Used to create a new user with a special role.
+     * @param token The token of an admin user.
+     * @param userCreateDto The new user information.
+     * @return A specialized response data transfer object.
+     * @throws CustomException
+     * @throws AuthenticationFailException
+     */
     public ResponseDto createUser(String token, UserCreateDto userCreateDto) throws CustomException, AuthenticationFailException {
         User creatingUser = authenticationService.getUser(token);
         if (!canCrudUser(creatingUser.getRole())) {
@@ -139,6 +158,11 @@ public class UserService {
 
     }
 
+    /**
+     * Used to check if the user has a high enough permission role.
+     * @param role The role of the user.
+     * @return A boolean.
+     */
     boolean canCrudUser(Role role) {
         if (role == Role.admin || role == Role.manager) {
             return true;
@@ -146,6 +170,12 @@ public class UserService {
         return false;
     }
 
+    /**
+     * Used to check if the user has a high enough permission role.
+     * @param userUpdating The admin or manager user.
+     * @param userIdBeingUpdated The user being updated's ID.
+     * @return A boolean.
+     */
     boolean canCrudUser(User userUpdating, Integer userIdBeingUpdated) {
         Role role = userUpdating.getRole();
         // admin and manager can crud any user
