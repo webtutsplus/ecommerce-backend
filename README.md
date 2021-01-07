@@ -13,6 +13,14 @@
 1. After starting application, go to http://localhost:8080/api/swagger-ui.html/
 
 
+## Category/Update/{id}
+* The input for updating the category via API is
+{
+    "categoryName":"name",
+    "imageUrl":"url",
+    "description":"desc"
+}
+
 
 
 ### In case of "java.lang.IllegalStateException: Unable to load cache item error":
