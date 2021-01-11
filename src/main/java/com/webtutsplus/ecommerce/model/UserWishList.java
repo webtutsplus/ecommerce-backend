@@ -1,17 +1,18 @@
 package com.webtutsplus.ecommerce.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserWishList {
     private long userId;
-    private long productsId;
+    private List<Long> productsId;
 
-    public UserWishList(long userId, long productsId) {
+    public UserWishList(long userId, List<Long> productsId) {
         this.userId = userId;
-        this.productsId = productsId;
+        this.productsId=productsId;
     }
 
-    public long getProductsId() {
+    public List<Long> getProductsId() {
         return productsId;
     }
 
