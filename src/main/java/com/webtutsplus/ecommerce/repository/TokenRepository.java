@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ConfirmationTokenRepository extends JpaRepository<AuthenticationToken, Integer> {
-    AuthenticationToken findConfirmationTokenByUser(User user);
-    AuthenticationToken findConfirmationTokenByConfirmationToken(String token);
+public interface TokenRepository extends JpaRepository<AuthenticationToken, Integer> {
+    AuthenticationToken findTokenByUser(User user);
+    AuthenticationToken findTokenByToken(String token);
 }

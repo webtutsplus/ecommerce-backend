@@ -36,3 +36,6 @@ build/
 ### VS Code ###
 .vscode/
 
+### Log Files ###
+nohup.out
+

@@ -98,7 +98,7 @@ public class UserService {
             throw new CustomException("token not present");
         }
 
-        return new SignInResponseDto ("success", token.getConfirmationToken());
+        return new SignInResponseDto ("success", token.getToken());
     }
 
 
