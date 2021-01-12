@@ -1,12 +1,12 @@
 package com.webtutsplus.ecommerce.model;
 
 
-import io.swagger.models.auth.In;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.Date;
+
 
 @Entity
 @Table(name = "wishlist")
@@ -22,6 +22,10 @@ public class WishList {
 
     @Column(name = "product_id")
     private @NotBlank Integer productId;
+
+
+    @Column(name = "created_date")
+    private Date createdDate;
 
     public WishList() {
     }
@@ -54,5 +58,13 @@ public class WishList {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
     }
 }
