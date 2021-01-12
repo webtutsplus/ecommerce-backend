@@ -161,9 +161,11 @@ DROP TABLE IF EXISTS `wishlist`;
 CREATE TABLE `wishlist` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `product_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK6p7qhvy1bfkri13u29x6pu8au` (`product_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,6 +174,7 @@ CREATE TABLE `wishlist` (
 
 LOCK TABLES `wishlist` WRITE;
 /*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
+INSERT INTO `wishlist` VALUES (1,1,'2021-01-12 21:06:39',1),(2,1,'2021-01-12 21:11:54',6),(3,2,'2021-01-12 21:12:34',3);
 /*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -184,4 +187,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-11 22:54:50
+-- Dump completed on 2021-01-12 21:44:56
