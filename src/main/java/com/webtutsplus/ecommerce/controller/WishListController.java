@@ -29,7 +29,7 @@ public class WishListController {
                 return new ResponseEntity<List<WishList>>(body, HttpStatus.OK);
         }
 
-        @PostMapping("/create")
+        @PostMapping("/add")
         public ResponseEntity<ApiResponse> addWishList(@Valid @RequestBody WishList wishList) {
                 wishListService.createWishlist(wishList);
                 return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Add to wishlist"), HttpStatus.CREATED);
