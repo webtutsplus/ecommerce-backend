@@ -2,17 +2,19 @@ package com.webtutsplus.ecommerce.controller;
 
 
 import com.webtutsplus.ecommerce.common.ApiResponse;
-import com.webtutsplus.ecommerce.model.Category;
+import com.webtutsplus.ecommerce.dto.ProductDto;
 import com.webtutsplus.ecommerce.model.WishList;
+import com.webtutsplus.ecommerce.service.ProductService;
 import com.webtutsplus.ecommerce.service.WishListService;
-import com.webtutsplus.ecommerce.utils.Helper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.config.Task;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +26,14 @@ public class WishListController {
         private WishListService wishListService;
 
         @GetMapping("/{user_id}")
-        public ResponseEntity<List<WishList>> getWishList(@PathVariable("user_id") Integer user_id) {
+        public ResponseEntity<List<ProductDto>> getWishList(@PathVariable("user_id") Integer user_id) {
                 List<WishList> body = wishListService.readWishList(user_id);
-                return new ResponseEntity<List<WishList>>(body, HttpStatus.OK);
+                List<ProductDto> products = new ArrayList<ProductDto>();
+                for (WishList wishList : body) {
+                        products.add(ProductService.getDtoFromProduct(wishList.getProduct()));
+                }
+
+                return new ResponseEntity<List<ProductDto>>(products, HttpStatus.OK);
         }
 
         @PostMapping("/add")

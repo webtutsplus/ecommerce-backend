@@ -21,17 +21,21 @@ public class WishList {
     private @NotBlank Integer userId;
 
     @Column(name = "product_id")
-    private @NotBlank Integer productId;
+    private @NotBlank Long productId;
 
 
     @Column(name = "created_date")
     private Date createdDate;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Product product;
+
     public WishList() {
     }
 
 
-    public WishList(Integer userId, Integer productId) {
+    public WishList(Integer userId, Long productId) {
         this.userId = userId;
         this.productId=productId;
     }
@@ -40,7 +44,7 @@ public class WishList {
         return id;
     }
 
-    public Integer getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
@@ -52,7 +56,7 @@ public class WishList {
         this.id = id;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 
@@ -66,5 +70,13 @@ public class WishList {
 
     public Date getCreatedDate() {
         return createdDate;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 }
