@@ -9,10 +9,13 @@ public class AuthenticationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
+    @Column(name = "confirmation_token")
     private String confirmationToken;
 
+    @Column(name = "created_date")
     private Date createdDate;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
