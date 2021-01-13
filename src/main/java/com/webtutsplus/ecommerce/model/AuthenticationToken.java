@@ -12,8 +12,8 @@ public class AuthenticationToken {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "confirmation_token")
-    private String confirmationToken;
+
+    private String token;
 
     @Column(name = "created_date")
     private Date createdDate;
@@ -25,7 +25,7 @@ public class AuthenticationToken {
     public AuthenticationToken(User user) {
         this.user = user;
         this.createdDate = new Date();
-        this.confirmationToken = UUID.randomUUID().toString();
+        this.token = UUID.randomUUID().toString();
     }
 
     public Integer getId() {
@@ -36,12 +36,12 @@ public class AuthenticationToken {
         this.id = id;
     }
 
-    public String getConfirmationToken() {
-        return confirmationToken;
+    public String getToken() {
+        return token;
     }
 
-    public void setConfirmationToken(String confirmationToken) {
-        this.confirmationToken = confirmationToken;
+    public void setToken(String Token) {
+        this.token = Token;
     }
 
     public Date getCreatedDate() {
@@ -60,9 +60,9 @@ public class AuthenticationToken {
         this.user = user;
     }
 
-    public AuthenticationToken(Integer id, String confirmationToken, Date createdDate, User user) {
+    public AuthenticationToken(Integer id, String Token, Date createdDate, User user) {
         this.id = id;
-        this.confirmationToken = confirmationToken;
+        this.token = Token;
         this.createdDate = createdDate;
         this.user = user;
     }

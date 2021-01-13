@@ -79,7 +79,7 @@ DROP TABLE IF EXISTS `tokens`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tokens` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `confirmation_token` varchar(255) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -165,7 +165,7 @@ CREATE TABLE `wishlist` (
   `product_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK6p7qhvy1bfkri13u29x6pu8au` (`product_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +174,7 @@ CREATE TABLE `wishlist` (
 
 LOCK TABLES `wishlist` WRITE;
 /*!40000 ALTER TABLE `wishlist` DISABLE KEYS */;
-INSERT INTO `wishlist` VALUES (1,1,'2021-01-12 21:06:39',1),(2,1,'2021-01-12 21:11:54',6),(3,2,'2021-01-12 21:12:34',3);
+INSERT INTO `wishlist` VALUES (1,1,'2021-01-12 21:06:39',1),(2,1,'2021-01-12 21:11:54',6),(3,2,'2021-01-12 21:12:34',3),(5,9,'2021-01-13 02:48:42',3),(6,11,'2021-01-13 02:51:01',1);
 /*!40000 ALTER TABLE `wishlist` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -187,4 +187,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-12 21:44:56
+-- Dump completed on 2021-01-13  3:42:14

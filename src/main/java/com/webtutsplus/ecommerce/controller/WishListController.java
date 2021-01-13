@@ -3,23 +3,17 @@ package com.webtutsplus.ecommerce.controller;
 
 import com.webtutsplus.ecommerce.common.ApiResponse;
 import com.webtutsplus.ecommerce.dto.ProductDto;
-import com.webtutsplus.ecommerce.model.AuthenticationToken;
 import com.webtutsplus.ecommerce.model.Product;
-import com.webtutsplus.ecommerce.model.User;
 import com.webtutsplus.ecommerce.model.WishList;
-import com.webtutsplus.ecommerce.repository.ConfirmationTokenRepository;
 import com.webtutsplus.ecommerce.service.AuthenticationService;
 import com.webtutsplus.ecommerce.service.ProductService;
 import com.webtutsplus.ecommerce.service.WishListService;
 
-import com.webtutsplus.ecommerce.utils.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
