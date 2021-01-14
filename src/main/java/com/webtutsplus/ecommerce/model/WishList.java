@@ -38,7 +38,7 @@ public class WishList {
     public WishList(Integer userId, Long productId) {
         this.userId = userId;
         this.productId=productId;
-        this.date = new Date();
+        this.createdDate = new Date();
     }
 
     public Integer getId() {
