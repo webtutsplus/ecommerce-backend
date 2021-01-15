@@ -28,8 +28,9 @@ public class WishListController {
         @Autowired
         private AuthenticationService authenticationService;
 
-        @GetMapping("/{user_id}")
-        public ResponseEntity<List<ProductDto>> getWishList(@PathVariable("user_id") Integer user_id) {
+        @GetMapping("/{token}")
+        public ResponseEntity<List<ProductDto>> getWishList(@PathVariable("token") String token) {
+                int user_id = authenticationService.getUser(token).getId();
                 List<WishList> body = wishListService.readWishList(user_id);
                 List<ProductDto> products = new ArrayList<ProductDto>();
                 for (WishList wishList : body) {
