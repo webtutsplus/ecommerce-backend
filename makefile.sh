@@ -23,6 +23,7 @@ sudo yum install java-1.8.0-openjdk
 
 sudo apt-get install openjdk-8-jdk openjdk-8-jre mysql-server maven
 
+
 gcloud auth login
 
 gcloud compute firewall-rules create default-allow-http-8080 \
