@@ -17,3 +17,18 @@ sudo yum install -y apache-maven
 #install jdk for springboot
 sudo yum install java-1.8.0-openjdk-devel
 sudo yum install java-1.8.0-openjdk
+
+
+######################## GCP configs
+
+sudo apt-get install openjdk-8-jdk openjdk-8-jre mysql-server maven
+
+gcloud auth login
+
+gcloud compute firewall-rules create default-allow-http-8080 \
+     --allow tcp:8080 \
+     --source-ranges 0.0.0.0/0 \
+     --target-tags http-server \
+     --description "Allow port 8080 access to http-server"
+
+
