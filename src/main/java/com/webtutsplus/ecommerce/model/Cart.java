@@ -26,6 +26,7 @@ public class Cart {
     @JoinColumn(name = "product_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Product product;
 
+
     private int quantity;
 
     public Cart() {
@@ -37,6 +38,7 @@ public class Cart {
         this.productId = cartDto.getProductId();
         this.quantity = cartDto.getQuantity();
         this.product = product;
+        this.createdDate = new Date();
     }
 
     public Cart(@NotBlank Integer userId, @NotBlank Long productId, int quantity) {
@@ -44,6 +46,13 @@ public class Cart {
         this.productId = productId;
         this.createdDate = new Date();
         this.quantity = quantity;
+    }
+
+    public Cart(CartDto cartDto, Product product) {
+        this.productId = cartDto.getProductId();
+        this.quantity = cartDto.getQuantity();
+        this.product = product;
+        this.createdDate = new Date();
     }
 
     public Integer getId() {

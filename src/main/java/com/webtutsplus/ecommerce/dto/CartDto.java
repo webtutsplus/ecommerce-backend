@@ -30,6 +30,15 @@ public class CartDto {
         this.setQuantity(cart.getQuantity());
     }
 
+    @Override
+    public String toString() {
+        return "CartDto{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                '}';
+    }
 
     public Integer getId() {
         return id;
