@@ -24,12 +24,6 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-
-//    public static ProductDto getDtoFromProduct(Product product) {
-//        ProductDto productDto = new ProductDto(product);
-//        return productDto;
-//    }
-
     public static Cart getCartFromDto(CartDto cartDto, Product product,int userId) {
         Cart cart = new Cart(cartDto, product,userId);
         return cart;
@@ -40,8 +34,8 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    public List<CartDto> listCartItems() {
-        List<Cart> cartList = cartRepository.findAll();
+    public List<CartDto> listCartItems(int user_id) {
+        List<Cart> cartList = cartRepository.findAllByUserIdOrderByCreatedDateDesc(user_id);
         List<CartDto> cartDtoList = new ArrayList<>();
         for (Cart cart:cartList){
             CartDto cartDto = getDtoFromCart(cart);
@@ -56,10 +50,10 @@ public class CartService {
         return cartDto;
     }
 
-    public void updateCartItem(long productID, CartDto cartDto, Product product) {
+    public void updateCartItem(long productID, CartDto cartDto, Product product,int userId) {
         Cart cart = getCartFromDto(cartDto, product);
         cart.setId(cartDto.getId());
-        cart.setUserId(cartDto.getUserId());
+        cart.setUserId(userId);
         cartRepository.save(cart);
     }
     public static Cart getCartFromDto(CartDto cartDto, Product product) {
@@ -67,12 +61,10 @@ public class CartService {
         return cart;
     }
 
-    public void deleteCartItem(int id){
-        boolean b = cartRepository.existsById(id);
+    public void deleteCartItem(int id,int userId){
         cartRepository.deleteById(id);
 
     }
-
 
 
 }
