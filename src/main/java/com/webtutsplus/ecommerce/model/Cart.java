@@ -22,7 +22,7 @@ public class Cart {
     @Column(name = "created_date")
     private Date createdDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Product product;
 

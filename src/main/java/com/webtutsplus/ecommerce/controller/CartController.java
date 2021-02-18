@@ -52,26 +52,24 @@ public class CartController {
         List<CartDto> body = cartService.listCartItems(user_id);
         return new ResponseEntity<List<CartDto>>(body,HttpStatus.OK);
     }
-    @PostMapping("/update/{cartItemId}")
-    public ResponseEntity<ApiResponse> updateCartItem(@PathVariable("cartItemId") long itemID, @RequestBody @Valid CartDto cartDto,@RequestParam("token") String token) {
+    @PutMapping("/update/{cartItemId}")
+    public ResponseEntity<ApiResponse> updateCartItem(@PathVariable("cartItemId") long itemID, @RequestBody @Valid CartDto cartDto,
+                                                      @RequestParam("token") String token,@RequestParam("quantity") int quantity) {
         Optional<Product> optionalProduct = productService.readProduct(cartDto.getProductId());
         if (!optionalProduct.isPresent()) {
             return new ResponseEntity<ApiResponse>(new ApiResponse(false, "product is invalid"), HttpStatus.CONFLICT);
         }
         Product product = optionalProduct.get();
         int userId = authenticationService.getUser(token).getId();
-        cartService.updateCartItem(itemID, cartDto, product,userId);
+//        cartService.updateCartItem(itemID,userId,quantity);
+        cartService.updateCartItem(itemID, cartDto,product,userId,quantity);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Product has been updated"), HttpStatus.OK);
     }
 
-    //TODO work on this
     @DeleteMapping("/delete/{cartItemId}")
     public ResponseEntity<ApiResponse> deleteCartItem(@PathVariable("cartItemId") int itemID,@RequestParam("token") String token){
         int userId = authenticationService.getUser(token).getId();
         cartService.deleteCartItem(itemID,userId);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true,"Item has been removed"),HttpStatus.OK);
     }
-    //TODO to check whether a item is in cart
-
-
 }

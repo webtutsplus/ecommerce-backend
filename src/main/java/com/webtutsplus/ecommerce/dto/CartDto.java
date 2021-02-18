@@ -12,6 +12,8 @@ public class CartDto {
     private @NotNull Integer userId;
     private @NotNull Long productId;
     private @NotNull Integer quantity;
+    private @NotNull Product product;
+
 
     public CartDto() {
     }
@@ -28,6 +30,7 @@ public class CartDto {
         this.setProductId(cart.getProductId());
         this.setUserId(cart.getUserId());
         this.setQuantity(cart.getQuantity());
+        this.setProduct(cart.getProduct());
     }
 
     @Override
@@ -37,6 +40,7 @@ public class CartDto {
                 ", userId=" + userId +
                 ", productId=" + productId +
                 ", quantity=" + quantity +
+                ", productName=" + product.getName() +
                 '}';
     }
 
@@ -70,6 +74,13 @@ public class CartDto {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
 }

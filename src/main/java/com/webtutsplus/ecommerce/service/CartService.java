@@ -50,10 +50,9 @@ public class CartService {
         return cartDto;
     }
 
-    public void updateCartItem(long productID, CartDto cartDto, Product product,int userId) {
+    public void updateCartItem(long itemId, CartDto cartDto, Product product, int userId, int quantity) {
         Cart cart = getCartFromDto(cartDto, product);
-        cart.setId(cartDto.getId());
-        cart.setUserId(userId);
+        cart.setQuantity(quantity);
         cartRepository.save(cart);
     }
     public static Cart getCartFromDto(CartDto cartDto, Product product) {
@@ -65,7 +64,6 @@ public class CartService {
         cartRepository.deleteById(id);
 
     }
-
 
 }
 
