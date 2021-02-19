@@ -3,10 +3,7 @@ package com.webtutsplus.ecommerce.controller;
 import com.webtutsplus.ecommerce.common.ApiResponse;
 import com.webtutsplus.ecommerce.dto.CartDto;
 import com.webtutsplus.ecommerce.dto.ProductDto;
-import com.webtutsplus.ecommerce.model.Cart;
-import com.webtutsplus.ecommerce.model.Category;
-import com.webtutsplus.ecommerce.model.Product;
-import com.webtutsplus.ecommerce.model.WishList;
+import com.webtutsplus.ecommerce.model.*;
 import com.webtutsplus.ecommerce.service.AuthenticationService;
 import com.webtutsplus.ecommerce.service.CartService;
 import com.webtutsplus.ecommerce.service.ProductService;
@@ -47,13 +44,13 @@ public class CartController {
 
     }
     @GetMapping("/")
-    public ResponseEntity<List<CartDto>> getCartItems(@RequestParam("token") String token) {
+    public ResponseEntity<CartCost> getCartItems(@RequestParam("token") String token) {
         int user_id = authenticationService.getUser(token).getId();
-        List<CartDto> body = cartService.listCartItems(user_id);
-        return new ResponseEntity<List<CartDto>>(body,HttpStatus.OK);
+        CartCost cartCost = cartService.listCartItems(user_id);
+        return new ResponseEntity<CartCost>(cartCost,HttpStatus.OK);
     }
     @PutMapping("/update/{cartItemId}")
-    public ResponseEntity<ApiResponse> updateCartItem(@PathVariable("cartItemId") long itemID, @RequestBody @Valid CartDto cartDto,
+    public ResponseEntity<ApiResponse> updateCartItem(@PathVariable("cartItemId") int itemID, @RequestBody @Valid CartDto cartDto,
                                                       @RequestParam("token") String token,@RequestParam("quantity") int quantity) {
         Optional<Product> optionalProduct = productService.readProduct(cartDto.getProductId());
         if (!optionalProduct.isPresent()) {
@@ -72,4 +69,5 @@ public class CartController {
         cartService.deleteCartItem(itemID,userId);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true,"Item has been removed"),HttpStatus.OK);
     }
+
 }

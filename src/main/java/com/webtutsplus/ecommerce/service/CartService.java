@@ -2,16 +2,15 @@ package com.webtutsplus.ecommerce.service;
 
 import com.webtutsplus.ecommerce.dto.CartDto;
 import com.webtutsplus.ecommerce.dto.ProductDto;
-import com.webtutsplus.ecommerce.model.Cart;
-import com.webtutsplus.ecommerce.model.Category;
-import com.webtutsplus.ecommerce.model.Product;
-import com.webtutsplus.ecommerce.model.WishList;
+import com.webtutsplus.ecommerce.model.*;
 import com.webtutsplus.ecommerce.repository.CartRepository;
 import com.webtutsplus.ecommerce.repository.WishListRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,14 +33,19 @@ public class CartService {
         cartRepository.save(cart);
     }
 
-    public List<CartDto> listCartItems(int user_id) {
+    public CartCost listCartItems(int user_id) {
         List<Cart> cartList = cartRepository.findAllByUserIdOrderByCreatedDateDesc(user_id);
-        List<CartDto> cartDtoList = new ArrayList<>();
+        List<CartDto> cartItems = new ArrayList<>();
         for (Cart cart:cartList){
             CartDto cartDto = getDtoFromCart(cart);
-            cartDtoList.add(cartDto);
+            cartItems.add(cartDto);
         }
-        return cartDtoList;
+        int totalCost = 0;
+        for (CartDto cartDto:cartItems){
+            totalCost += (cartDto.getProduct().getPrice()* cartDto.getQuantity());
+        }
+        CartCost cartCost = new CartCost(cartItems,totalCost);
+        return cartCost;
     }
 
 
@@ -50,9 +54,12 @@ public class CartService {
         return cartDto;
     }
 
-    public void updateCartItem(long itemId, CartDto cartDto, Product product, int userId, int quantity) {
+    public void updateCartItem(int itemId, CartDto cartDto, Product product, int userId, int quantity) {
         Cart cart = getCartFromDto(cartDto, product);
         cart.setQuantity(quantity);
+        cart.setId(itemId);
+        cart.setUserId(userId);
+        cart.setCreatedDate(new Date());
         cartRepository.save(cart);
     }
     public static Cart getCartFromDto(CartDto cartDto, Product product) {
@@ -62,7 +69,6 @@ public class CartService {
 
     public void deleteCartItem(int id,int userId){
         cartRepository.deleteById(id);
-
     }
 
 }
