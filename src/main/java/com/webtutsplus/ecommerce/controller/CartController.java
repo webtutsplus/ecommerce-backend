@@ -39,7 +39,7 @@ public class CartController {
         catch (Exception e){
             return new ResponseEntity<ApiResponse>(new ApiResponse(false,"invalid token"),HttpStatus.UNAUTHORIZED);
         }
-        Optional<Product> optionalProduct = productService.readProduct(cartDto.getProductId());
+        Optional<Product> optionalProduct = productService.getProductById(cartDto.getProductId());
         if (!optionalProduct.isPresent()) {
             return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Item is invalid"), HttpStatus.CONFLICT);
         }
@@ -58,7 +58,7 @@ public class CartController {
     @PutMapping("/update/{cartItemId}")
     public ResponseEntity<ApiResponse> updateCartItem(@PathVariable("cartItemId") int itemID, @RequestBody @Valid CartDto cartDto,
                                                       @RequestParam("token") String token,@RequestParam("quantity") int quantity) {
-        Optional<Product> optionalProduct = productService.readProduct(cartDto.getProductId());
+        Optional<Product> optionalProduct = productService.getProductById(cartDto.getProductId());
         if (!optionalProduct.isPresent()) {
             return new ResponseEntity<ApiResponse>(new ApiResponse(false, "product is invalid"), HttpStatus.CONFLICT);
         }
