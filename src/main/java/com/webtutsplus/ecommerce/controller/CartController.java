@@ -32,7 +32,13 @@ public class CartController {
 
     @PostMapping("/add")
     public ResponseEntity<ApiResponse> addToCart(@RequestBody CartDto cartDto, @RequestParam("token") String token) {
-        int userId = authenticationService.getUser(token).getId();
+        int userId;
+        try {
+            userId = authenticationService.getUser(token).getId();
+        }
+        catch (Exception e){
+            return new ResponseEntity<ApiResponse>(new ApiResponse(false,"invalid token"),HttpStatus.UNAUTHORIZED);
+        }
         Optional<Product> optionalProduct = productService.readProduct(cartDto.getProductId());
         if (!optionalProduct.isPresent()) {
             return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Item is invalid"), HttpStatus.CONFLICT);
@@ -65,9 +71,18 @@ public class CartController {
 
     @DeleteMapping("/delete/{cartItemId}")
     public ResponseEntity<ApiResponse> deleteCartItem(@PathVariable("cartItemId") int itemID,@RequestParam("token") String token){
-        int userId = authenticationService.getUser(token).getId();
-        cartService.deleteCartItem(itemID,userId);
-        return new ResponseEntity<ApiResponse>(new ApiResponse(true,"Item has been removed"),HttpStatus.OK);
+        int userId;
+        try {
+            userId = authenticationService.getUser(token).getId();
+        }
+        catch (Exception e){
+            return new ResponseEntity<ApiResponse>(new ApiResponse(false,"invalid token"),HttpStatus.UNAUTHORIZED);
+        }
+        String response = cartService.deleteCartItem(itemID,userId);
+        if(response.equals("Success")) {
+            return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Item has been removed"), HttpStatus.OK);
+        }
+        return new ResponseEntity<ApiResponse>(new ApiResponse(false,"item id not found"),HttpStatus.NOT_FOUND);
     }
 
 }

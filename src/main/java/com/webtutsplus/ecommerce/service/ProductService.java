@@ -49,8 +49,7 @@ public class ProductService {
     }
 
 
-    public Optional<Product> readProduct(Long productId) {
-        System.out.println("product id " + productId);
+    public Optional<Product> getProductById(Long productId) {
         return productRepository.findById(productId);
     }
 

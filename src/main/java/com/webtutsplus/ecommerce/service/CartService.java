@@ -40,7 +40,7 @@ public class CartService {
             CartDto cartDto = getDtoFromCart(cart);
             cartItems.add(cartDto);
         }
-        int totalCost = 0;
+        double totalCost = 0;
         for (CartDto cartDto:cartItems){
             totalCost += (cartDto.getProduct().getPrice()* cartDto.getQuantity());
         }
@@ -67,8 +67,12 @@ public class CartService {
         return cart;
     }
 
-    public void deleteCartItem(int id,int userId){
-        cartRepository.deleteById(id);
+    public String deleteCartItem(int id,int userId){
+        if(cartRepository.existsById(id)) {
+            cartRepository.deleteById(id);
+            return "Success";
+        }
+        return "Failure";
     }
 
 }

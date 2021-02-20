@@ -6,9 +6,9 @@ import java.util.List;
 
 public class CartCost {
     private List<CartDto> cartItems;
-    private int totalCost;
+    private double totalCost;
 
-    public CartCost(List<CartDto> cartDtoList, int totalCost) {
+    public CartCost(List<CartDto> cartDtoList, double totalCost) {
         this.cartItems = cartDtoList;
         this.totalCost = totalCost;
     }
@@ -21,7 +21,7 @@ public class CartCost {
         this.cartItems = cartDtoList;
     }
 
-    public int getTotalCost() {
+    public double getTotalCost() {
         return totalCost;
     }
 
