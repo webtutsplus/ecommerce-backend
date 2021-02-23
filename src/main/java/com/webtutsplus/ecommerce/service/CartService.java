@@ -27,11 +27,6 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public static Cart getCartFromDto(CartDto cartDto, Product product,int userId) {
-        Cart cart = new Cart(cartDto, product,userId);
-        return cart;
-    }
-
     public void addToCart(AddToCartDto addToCartDto,int userId){
         Cart cart = getAddToCartFromDto(addToCartDto,userId);
         cartRepository.save(cart);
@@ -63,17 +58,15 @@ public class CartService {
         return cartDto;
     }
 
-    public void updateCartItem(int itemId, CartDto cartDto, Product product, int userId, int quantity) {
-        Cart cart = getCartFromDto(cartDto, product);
-        cart.setQuantity(quantity);
-        cart.setId(itemId);
+
+    public void updateCartItem(AddToCartDto cartDto,int userId,Product product){
+        Cart cart = getAddToCartFromDto(cartDto,userId);
+        cart.setQuantity(cartDto.getQuantity());
         cart.setUserId(userId);
+        cart.setId(cartDto.getId());
+        cart.setProductId(product.getId());
         cart.setCreatedDate(new Date());
         cartRepository.save(cart);
-    }
-    public static Cart getCartFromDto(CartDto cartDto, Product product) {
-        Cart cart = new Cart(cartDto, product);
-        return cart;
     }
 
     public void deleteCartItem(int id,int userId) throws CartItemNotExistException {

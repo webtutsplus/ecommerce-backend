@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 public class CartDto {
     private Integer id;
     private @NotNull Integer userId;
-    private @NotNull Long productId;
     private @NotNull Integer quantity;
     private @NotNull Product product;
 
@@ -19,7 +18,6 @@ public class CartDto {
 
     public CartDto(Cart cart) {
         this.setId(cart.getId());
-        this.setProductId(cart.getProductId());
         this.setUserId(cart.getUserId());
         this.setQuantity(cart.getQuantity());
         this.setProduct(cart.getProduct());
@@ -30,7 +28,6 @@ public class CartDto {
         return "CartDto{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", productId=" + productId +
                 ", quantity=" + quantity +
                 ", productName=" + product.getName() +
                 '}';
@@ -50,14 +47,6 @@ public class CartDto {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     public Integer getQuantity() {

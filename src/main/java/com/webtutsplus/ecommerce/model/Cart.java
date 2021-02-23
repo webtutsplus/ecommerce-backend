@@ -36,7 +36,7 @@ public class Cart {
 
     public Cart(CartDto cartDto, Product product,int userId){
         this.userId = userId;
-        this.productId = cartDto.getProductId();
+        this.productId = product.getId();
         this.quantity = cartDto.getQuantity();
         this.product = product;
         this.createdDate = new Date();
@@ -58,7 +58,7 @@ public class Cart {
     }
 
     public Cart(CartDto cartDto, Product product) {
-        this.productId = cartDto.getProductId();
+        this.productId = product.getId();
         this.quantity = cartDto.getQuantity();
         this.product = product;
         this.createdDate = new Date();
