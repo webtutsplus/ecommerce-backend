@@ -1,5 +1,6 @@
 package com.webtutsplus.ecommerce.service;
 
+import com.webtutsplus.ecommerce.dto.AddToCartDto;
 import com.webtutsplus.ecommerce.dto.CartDto;
 import com.webtutsplus.ecommerce.dto.ProductDto;
 import com.webtutsplus.ecommerce.exceptions.CartItemNotExistException;
@@ -31,9 +32,14 @@ public class CartService {
         return cart;
     }
 
-    public void addToCart(CartDto cartDto, Product product,int userId) {
-        Cart cart = getCartFromDto(cartDto, product,userId);
+    public void addToCart(AddToCartDto addToCartDto,int userId){
+        Cart cart = getAddToCartFromDto(addToCartDto,userId);
         cartRepository.save(cart);
+    }
+
+    private Cart getAddToCartFromDto(AddToCartDto addToCartDto, int userId) {
+        Cart cart = new Cart(addToCartDto, userId);
+        return cart;
     }
 
     public CartCost listCartItems(int user_id) {
@@ -71,16 +77,13 @@ public class CartService {
     }
 
     public void deleteCartItem(int id,int userId) throws CartItemNotExistException {
-//        if(cartRepository.existsById(id)) {
-//            cartRepository.deleteById(id);
-//            return "Success";
-//        }
-//        return "Failure";
         if (!cartRepository.existsById(id))
             throw new CartItemNotExistException("Cart id is invalid : " + id);
         cartRepository.deleteById(id);
 
     }
+
+
 
 
 

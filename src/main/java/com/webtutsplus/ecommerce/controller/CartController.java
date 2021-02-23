@@ -1,6 +1,7 @@
 package com.webtutsplus.ecommerce.controller;
 
 import com.webtutsplus.ecommerce.common.ApiResponse;
+import com.webtutsplus.ecommerce.dto.AddToCartDto;
 import com.webtutsplus.ecommerce.dto.CartDto;
 import com.webtutsplus.ecommerce.dto.ProductDto;
 import com.webtutsplus.ecommerce.exceptions.AuthenticationFailException;
@@ -33,14 +34,12 @@ public class CartController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addToCart(@RequestBody CartDto cartDto, @RequestParam("token") String token) throws AuthenticationFailException, ProductNotExistException {
+    public ResponseEntity<ApiResponse> addToCart(@RequestBody AddToCartDto addToCartDto, @RequestParam("token") String token) throws AuthenticationFailException, ProductNotExistException {
         authenticationService.authenticate(token);
 
         int userId = authenticationService.getUser(token).getId();
 
-        Product product = productService.getProductById(cartDto.getProductId());
-
-        cartService.addToCart(cartDto,product,userId);
+        cartService.addToCart(addToCartDto,userId);
 
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Added to cart"), HttpStatus.CREATED);
 
