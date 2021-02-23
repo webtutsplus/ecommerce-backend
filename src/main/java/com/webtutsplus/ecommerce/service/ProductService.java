@@ -1,6 +1,7 @@
 package com.webtutsplus.ecommerce.service;
 
 import com.webtutsplus.ecommerce.dto.ProductDto;
+import com.webtutsplus.ecommerce.exceptions.ProductNotExistException;
 import com.webtutsplus.ecommerce.model.Category;
 import com.webtutsplus.ecommerce.model.Product;
 import com.webtutsplus.ecommerce.repository.ProductRepository;
@@ -49,8 +50,11 @@ public class ProductService {
     }
 
 
-    public Optional<Product> getProductById(Long productId) {
-        return productRepository.findById(productId);
+    public Product getProductById(Long productId) throws ProductNotExistException {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (!optionalProduct.isPresent())
+            throw new ProductNotExistException("Product id is invalid " + productId);
+        return optionalProduct.get();
     }
 
 

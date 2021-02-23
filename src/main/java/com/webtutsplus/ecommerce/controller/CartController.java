@@ -3,6 +3,8 @@ package com.webtutsplus.ecommerce.controller;
 import com.webtutsplus.ecommerce.common.ApiResponse;
 import com.webtutsplus.ecommerce.dto.CartDto;
 import com.webtutsplus.ecommerce.dto.ProductDto;
+import com.webtutsplus.ecommerce.exceptions.AuthenticationFailException;
+import com.webtutsplus.ecommerce.exceptions.ProductNotExistException;
 import com.webtutsplus.ecommerce.model.*;
 import com.webtutsplus.ecommerce.service.AuthenticationService;
 import com.webtutsplus.ecommerce.service.CartService;
@@ -31,58 +33,45 @@ public class CartController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addToCart(@RequestBody CartDto cartDto, @RequestParam("token") String token) {
-        int userId;
-        try {
-            userId = authenticationService.getUser(token).getId();
-        }
-        catch (Exception e){
-            return new ResponseEntity<ApiResponse>(new ApiResponse(false,"invalid token"),HttpStatus.UNAUTHORIZED);
-        }
-        Optional<Product> optionalProduct = productService.getProductById(cartDto.getProductId());
-        if (!optionalProduct.isPresent()) {
-            return new ResponseEntity<ApiResponse>(new ApiResponse(false, "Item is invalid"), HttpStatus.CONFLICT);
-        }
-        Product product = optionalProduct.get();
+    public ResponseEntity<ApiResponse> addToCart(@RequestBody CartDto cartDto, @RequestParam("token") String token) throws AuthenticationFailException, ProductNotExistException {
+        authenticationService.authenticate(token);
+
+        int userId = authenticationService.getUser(token).getId();
+
+        Product product = productService.getProductById(cartDto.getProductId());
+
         cartService.addToCart(cartDto,product,userId);
 
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Added to cart"), HttpStatus.CREATED);
 
     }
     @GetMapping("/")
-    public ResponseEntity<CartCost> getCartItems(@RequestParam("token") String token) {
+    public ResponseEntity<CartCost> getCartItems(@RequestParam("token") String token) throws AuthenticationFailException {
+        authenticationService.authenticate(token);
         int user_id = authenticationService.getUser(token).getId();
         CartCost cartCost = cartService.listCartItems(user_id);
         return new ResponseEntity<CartCost>(cartCost,HttpStatus.OK);
     }
     @PutMapping("/update/{cartItemId}")
     public ResponseEntity<ApiResponse> updateCartItem(@PathVariable("cartItemId") int itemID, @RequestBody @Valid CartDto cartDto,
-                                                      @RequestParam("token") String token,@RequestParam("quantity") int quantity) {
-        Optional<Product> optionalProduct = productService.getProductById(cartDto.getProductId());
-        if (!optionalProduct.isPresent()) {
-            return new ResponseEntity<ApiResponse>(new ApiResponse(false, "product is invalid"), HttpStatus.CONFLICT);
-        }
-        Product product = optionalProduct.get();
+                                                      @RequestParam("token") String token,@RequestParam("quantity") int quantity) throws AuthenticationFailException,ProductNotExistException {
+        authenticationService.authenticate(token);
         int userId = authenticationService.getUser(token).getId();
-//        cartService.updateCartItem(itemID,userId,quantity);
+
+        Product product = productService.getProductById(cartDto.getProductId());
+
         cartService.updateCartItem(itemID, cartDto,product,userId,quantity);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Product has been updated"), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{cartItemId}")
-    public ResponseEntity<ApiResponse> deleteCartItem(@PathVariable("cartItemId") int itemID,@RequestParam("token") String token){
-        int userId;
-        try {
-            userId = authenticationService.getUser(token).getId();
-        }
-        catch (Exception e){
-            return new ResponseEntity<ApiResponse>(new ApiResponse(false,"invalid token"),HttpStatus.UNAUTHORIZED);
-        }
-        String response = cartService.deleteCartItem(itemID,userId);
-        if(response.equals("Success")) {
-            return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Item has been removed"), HttpStatus.OK);
-        }
-        return new ResponseEntity<ApiResponse>(new ApiResponse(false,"item id not found"),HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiResponse> deleteCartItem(@PathVariable("cartItemId") int itemID,@RequestParam("token") String token) throws AuthenticationFailException{
+        authenticationService.authenticate(token);
+
+        int userId = authenticationService.getUser(token).getId();
+
+        cartService.deleteCartItem(itemID,userId);
+        return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Item has been removed"), HttpStatus.OK);
     }
 
 }

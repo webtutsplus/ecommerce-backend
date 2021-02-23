@@ -2,6 +2,8 @@ package com.webtutsplus.ecommerce.service;
 
 import com.webtutsplus.ecommerce.dto.CartDto;
 import com.webtutsplus.ecommerce.dto.ProductDto;
+import com.webtutsplus.ecommerce.exceptions.CartItemNotExistException;
+import com.webtutsplus.ecommerce.exceptions.ProductNotExistException;
 import com.webtutsplus.ecommerce.model.*;
 import com.webtutsplus.ecommerce.repository.CartRepository;
 import com.webtutsplus.ecommerce.repository.WishListRepository;
@@ -12,6 +14,7 @@ import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -67,13 +70,19 @@ public class CartService {
         return cart;
     }
 
-    public String deleteCartItem(int id,int userId){
-        if(cartRepository.existsById(id)) {
-            cartRepository.deleteById(id);
-            return "Success";
-        }
-        return "Failure";
+    public void deleteCartItem(int id,int userId) throws CartItemNotExistException {
+//        if(cartRepository.existsById(id)) {
+//            cartRepository.deleteById(id);
+//            return "Success";
+//        }
+//        return "Failure";
+        if (!cartRepository.existsById(id))
+            throw new CartItemNotExistException("Cart id is invalid : " + id);
+        cartRepository.deleteById(id);
+
     }
+
+
 
 }
 
