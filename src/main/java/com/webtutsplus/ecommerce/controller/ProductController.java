@@ -1,12 +1,10 @@
 package com.webtutsplus.ecommerce.controller;
 
 import com.webtutsplus.ecommerce.common.ApiResponse;
-import com.webtutsplus.ecommerce.dto.ProductDto;
+import com.webtutsplus.ecommerce.dto.ProductDTOs.ProductDto;
 import com.webtutsplus.ecommerce.model.Category;
-import com.webtutsplus.ecommerce.model.Product;
 import com.webtutsplus.ecommerce.service.CategoryService;
 import com.webtutsplus.ecommerce.service.ProductService;
-import com.webtutsplus.ecommerce.utils.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

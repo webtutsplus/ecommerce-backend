@@ -1,31 +1,26 @@
-package com.webtutsplus.ecommerce.dto;
+package com.webtutsplus.ecommerce.dto.ProductDTOs;
 
 import com.webtutsplus.ecommerce.model.Cart;
 import com.webtutsplus.ecommerce.model.Product;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class AddToCartDto {
+public class CartDto {
     private Integer id;
     private @NotNull Integer userId;
-    private @NotNull Long productId;
     private @NotNull Integer quantity;
+    private @NotNull Product product;
 
-    public AddToCartDto() {
+    public CartDto() {
     }
 
-    public AddToCartDto(Integer id, @NotNull Integer userId, @NotNull Long productId, @NotNull Integer quantity) {
-        this.id = id;
-        this.userId = userId;
-        this.productId = productId;
-        this.quantity = quantity;
-    }
-
-    public AddToCartDto(Cart cart) {
+    public CartDto(Cart cart) {
         this.setId(cart.getId());
-        this.setProductId(cart.getProductId());
         this.setUserId(cart.getUserId());
         this.setQuantity(cart.getQuantity());
+        this.setProduct(cart.getProduct());
     }
 
     @Override
@@ -33,9 +28,9 @@ public class AddToCartDto {
         return "CartDto{" +
                 "id=" + id +
                 ", userId=" + userId +
-                ", productId=" + productId +
                 ", quantity=" + quantity +
-                ",";
+                ", productName=" + product.getName() +
+                '}';
     }
 
     public Integer getId() {
@@ -54,14 +49,6 @@ public class AddToCartDto {
         this.userId = userId;
     }
 
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
     public Integer getQuantity() {
         return quantity;
     }
@@ -69,4 +56,12 @@ public class AddToCartDto {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
 }
