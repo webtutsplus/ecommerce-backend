@@ -1,6 +1,7 @@
 package com.webtutsplus.ecommerce.service;
 
 import com.webtutsplus.ecommerce.dto.ProductDto;
+import com.webtutsplus.ecommerce.exceptions.ProductNotExistException;
 import com.webtutsplus.ecommerce.model.Category;
 import com.webtutsplus.ecommerce.model.Product;
 import com.webtutsplus.ecommerce.repository.ProductRepository;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class ProductService {
@@ -45,4 +48,14 @@ public class ProductService {
         product.setId(productID);
         productRepository.save(product);
     }
+
+
+    public Product getProductById(Long productId) throws ProductNotExistException {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (!optionalProduct.isPresent())
+            throw new ProductNotExistException("Product id is invalid " + productId);
+        return optionalProduct.get();
+    }
+
+
 }
