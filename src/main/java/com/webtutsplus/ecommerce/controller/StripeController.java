@@ -3,7 +3,9 @@ package com.webtutsplus.ecommerce.controller;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Price;
+import com.stripe.model.SetupIntent;
 import com.stripe.model.checkout.Session;
+import com.stripe.param.SetupIntentCreateParams;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.webtutsplus.ecommerce.model.CheckoutBody;
 import com.webtutsplus.ecommerce.model.StripeResponse;
@@ -15,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/checkout")
 public class StripeController {
 
     @PostMapping("/create-checkout-session")
@@ -58,7 +60,18 @@ public class StripeController {
         return new ResponseEntity<StripeResponse>(stripeResponse,HttpStatus.OK);
 
     }
-
+//    @GetMapping("/get-setup-intent")
+//    public SetupIntent createSetupToken(@RequestBody CheckoutBody checkoutBody) throws StripeException {
+//
+//        SetupIntentCreateParams params =
+//                SetupIntentCreateParams.builder()
+//                        .setUsage(SetupIntentCreateParams.Usage.ON_SESSION)
+//                        .build();
+//
+//        SetupIntent setupIntent = SetupIntent.create(params);
+//        System.out.println("SetupIntent : " + setupIntent.getId() +  "   " + setupIntent.toString());
+//        return setupIntent;
+//    }
 
 
 }
