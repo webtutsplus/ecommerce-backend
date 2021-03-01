@@ -1,14 +1,16 @@
 package com.webtutsplus.ecommerce.model;
 
-import com.webtutsplus.ecommerce.dto.ProductDTOs.AddToCartDto;
-import com.webtutsplus.ecommerce.dto.ProductDTOs.CartDto;
+
+import com.webtutsplus.ecommerce.dto.ProductDTOs.OrderDto;
+import com.webtutsplus.ecommerce.dto.ProductDTOs.PlaceOrderDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
-@Table(name="cart")
-public class Cart {
+@Table(name="order")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +22,8 @@ public class Cart {
     @Column(name = "product_id")
     private @NotBlank Long productId;
 
+    private @NotBlank Integer quantity;
+
     @Column(name = "created_date")
     private Date createdDate;
 
@@ -28,16 +32,15 @@ public class Cart {
     private Product product;
 
 
-    private int quantity;
-
-    public Cart() {
+    public Order() {
     }
 
-    public Cart(AddToCartDto addToCartDto,int userId){
+    public Order(PlaceOrderDto orderDto, int userId){
         this.userId = userId;
-        this.productId = addToCartDto.getProductId();
-        this.quantity = addToCartDto.getQuantity();
+        this.productId = orderDto.getProductId();
+        this.quantity = orderDto.getQuantity();
         this.createdDate = new Date();
+
     }
 
     public Integer getId() {
@@ -64,6 +67,14 @@ public class Cart {
         this.productId = productId;
     }
 
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -78,13 +89,5 @@ public class Cart {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 }

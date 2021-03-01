@@ -1,9 +1,7 @@
 package com.webtutsplus.ecommerce.controller;
 
 import com.webtutsplus.ecommerce.common.ApiResponse;
-import com.webtutsplus.ecommerce.dto.AddToCartDto;
-import com.webtutsplus.ecommerce.dto.CartDto;
-import com.webtutsplus.ecommerce.dto.ProductDto;
+import com.webtutsplus.ecommerce.dto.ProductDTOs.AddToCartDto;
 import com.webtutsplus.ecommerce.exceptions.AuthenticationFailException;
 import com.webtutsplus.ecommerce.exceptions.CartItemNotExistException;
 import com.webtutsplus.ecommerce.exceptions.ProductNotExistException;
@@ -11,16 +9,12 @@ import com.webtutsplus.ecommerce.model.*;
 import com.webtutsplus.ecommerce.service.AuthenticationService;
 import com.webtutsplus.ecommerce.service.CartService;
 import com.webtutsplus.ecommerce.service.ProductService;
-import com.webtutsplus.ecommerce.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/cart")

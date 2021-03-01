@@ -1,4 +1,4 @@
-package com.webtutsplus.ecommerce.dto;
+package com.webtutsplus.ecommerce.dto.ProductDTOs;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.webtutsplus.ecommerce.model.Product;

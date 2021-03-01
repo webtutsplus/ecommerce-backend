@@ -1,6 +1,6 @@
 package com.webtutsplus.ecommerce.service;
 
-import com.webtutsplus.ecommerce.dto.ProductDto;
+import com.webtutsplus.ecommerce.dto.ProductDTOs.ProductDto;
 import com.webtutsplus.ecommerce.exceptions.ProductNotExistException;
 import com.webtutsplus.ecommerce.model.Category;
 import com.webtutsplus.ecommerce.model.Product;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 @Service
 public class ProductService {

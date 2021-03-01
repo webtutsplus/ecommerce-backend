@@ -1,6 +1,6 @@
 package com.webtutsplus.ecommerce.model;
 
-import com.webtutsplus.ecommerce.dto.CartDto;
+import com.webtutsplus.ecommerce.dto.ProductDTOs.CartDto;
 
 import java.util.List;
 
