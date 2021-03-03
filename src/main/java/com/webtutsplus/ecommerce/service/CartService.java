@@ -5,6 +5,7 @@ import com.webtutsplus.ecommerce.dto.ProductDTOs.CartDto;
 import com.webtutsplus.ecommerce.exceptions.CartItemNotExistException;
 import com.webtutsplus.ecommerce.model.*;
 import com.webtutsplus.ecommerce.repository.CartRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,7 +17,10 @@ import java.util.List;
 @Transactional
 public class CartService {
 
-    private final CartRepository cartRepository;
+    @Autowired
+    private  CartRepository cartRepository;
+
+    public CartService(){}
 
     public CartService(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
@@ -71,8 +75,9 @@ public class CartService {
 
     }
 
-
-
+    public void deleteCartItems(int userId) {
+        cartRepository.deleteAll();
+    }
 
 
 }

@@ -8,26 +8,15 @@ import javax.validation.constraints.NotNull;
 public class PlaceOrderDto {
     private Integer id;
     private @NotNull Integer userId;
-    private @NotNull Integer quantity;
-    private @NotNull Long productId;
-
+    private @NotNull Double totalPrice;
 
     public PlaceOrderDto() {
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     public PlaceOrderDto(Order order) {
         this.setId(order.getId());
         this.setUserId(order.getUserId());
-        this.setQuantity(order.getQuantity());
-        this.setProductId(order.getProductId());
+        this.setTotalPrice(order.getTotalPrice());
     }
 
     public Integer getId() {
@@ -46,12 +35,11 @@ public class PlaceOrderDto {
         this.userId = userId;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
-
 }

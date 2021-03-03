@@ -21,19 +21,18 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public void createAnOrder(PlaceOrderDto orderDto, int userId){
-        Order order = getOrderFromDto(orderDto,userId);
-        orderRepository.save(order);
-
+    public int createAnOrder(PlaceOrderDto orderDto, int userId, String sessionID){
+        Order order = getOrderFromDto(orderDto,userId,sessionID);
+        return orderRepository.save(order).getId();
     }
 
-    private Order getOrderFromDto(PlaceOrderDto orderDto, int userId) {
-        Order order = new Order(orderDto,userId);
+    private Order getOrderFromDto(PlaceOrderDto orderDto, int userId,String sessionID) {
+        Order order = new Order(orderDto,userId,sessionID);
         return order;
     }
 
 
-    public List<OrderDto> listOrders(int user_id) {
+    /*public List<OrderDto> listOrders(int user_id) {
         List<Order> orderList = orderRepository.findAllByUserIdOrderByCreatedDateDesc(user_id);
         List<OrderDto> orderDtoList = new ArrayList<>();
         for (Order order:orderList){
@@ -41,6 +40,16 @@ public class OrderService {
             orderDtoList.add(orderDto);
         }
         return orderDtoList;
+    }*/
+
+    public List<Order> listOrders(int user_id) {
+        List<Order> orderList = orderRepository.findAllByUserIdOrderByCreatedDateDesc(user_id);
+        /*List<OrderDto> orderDtoList = new ArrayList<>();
+        for (Order order:orderList){
+            OrderDto orderDto = getDtoFromOrder(order);
+            orderDtoList.add(orderDto);
+        }*/
+        return orderList;
     }
 
 

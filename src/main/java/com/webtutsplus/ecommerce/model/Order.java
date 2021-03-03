@@ -7,6 +7,7 @@ import com.webtutsplus.ecommerce.dto.ProductDTOs.PlaceOrderDto;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="order")
@@ -19,29 +20,48 @@ public class Order {
     @Column(name = "user_id")
     private @NotBlank Integer userId;
 
-    @Column(name = "product_id")
-    private @NotBlank Long productId;
-
-    private @NotBlank Integer quantity;
-
     @Column(name = "created_date")
     private Date createdDate;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Product product;
+    @Column(name = "total_price")
+    private Double totalPrice;
 
+    @Column(name = "session-id")
+    private String sessionId;
+
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name = "order_id",referencedColumnName = "id",insertable = false,updatable = false)
+    private List<OrderItems> orderItems;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private User user;
 
     public Order() {
     }
 
-    public Order(PlaceOrderDto orderDto, int userId){
+    public Order(PlaceOrderDto orderDto, int userId, String sessionId){
         this.userId = userId;
-        this.productId = orderDto.getProductId();
-        this.quantity = orderDto.getQuantity();
         this.createdDate = new Date();
-
+        this.totalPrice = orderDto.getTotalPrice();
+        this.sessionId = sessionId;
     }
+
+    public List<OrderItems> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItems> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    /*public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }*/
 
     public Integer getId() {
         return id;
@@ -59,22 +79,6 @@ public class Order {
         this.userId = userId;
     }
 
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -83,11 +87,11 @@ public class Order {
         this.createdDate = createdDate;
     }
 
-    public Product getProduct() {
-        return product;
+    public Double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
