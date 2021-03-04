@@ -1,4 +1,4 @@
-package com.webtutsplus.ecommerce.model;
+package com.webtutsplus.ecommerce.dto.checkout;
 
 public class StripeResponse {
     private String sessionId;

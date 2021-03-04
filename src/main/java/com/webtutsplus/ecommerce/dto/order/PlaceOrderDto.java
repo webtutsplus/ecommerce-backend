@@ -1,18 +1,21 @@
-package com.webtutsplus.ecommerce.dto.ProductDTOs;
+package com.webtutsplus.ecommerce.dto.order;
 
 import com.webtutsplus.ecommerce.model.Order;
+
 import javax.validation.constraints.NotNull;
 
-public class OrderDto {
+public class PlaceOrderDto {
     private Integer id;
     private @NotNull Integer userId;
+    private @NotNull Double totalPrice;
 
-    public OrderDto() {
+    public PlaceOrderDto() {
     }
 
-    public OrderDto(Order order) {
+    public PlaceOrderDto(Order order) {
         this.setId(order.getId());
         this.setUserId(order.getUserId());
+        this.setTotalPrice(order.getTotalPrice());
     }
 
     public Integer getId() {
@@ -31,4 +34,11 @@ public class OrderDto {
         this.userId = userId;
     }
 
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 }

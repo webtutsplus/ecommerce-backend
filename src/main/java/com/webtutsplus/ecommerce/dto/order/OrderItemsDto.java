@@ -1,7 +1,4 @@
-package com.webtutsplus.ecommerce.dto.ProductDTOs;
-
-import com.webtutsplus.ecommerce.model.OrderItems;
-import org.aspectj.weaver.ast.Or;
+package com.webtutsplus.ecommerce.dto.order;
 
 import javax.validation.constraints.NotNull;
 

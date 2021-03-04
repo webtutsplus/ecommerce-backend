@@ -1,8 +1,7 @@
 package com.webtutsplus.ecommerce.model;
 
 
-import com.webtutsplus.ecommerce.dto.ProductDTOs.OrderDto;
-import com.webtutsplus.ecommerce.dto.ProductDTOs.PlaceOrderDto;
+import com.webtutsplus.ecommerce.dto.order.PlaceOrderDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -31,7 +30,7 @@ public class Order {
 
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "order_id",referencedColumnName = "id",insertable = false,updatable = false)
-    private List<OrderItems> orderItems;
+    private List<OrderItem> orderItems;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
@@ -47,11 +46,11 @@ public class Order {
         this.sessionId = sessionId;
     }
 
-    public List<OrderItems> getOrderItems() {
+    public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<OrderItems> orderItems) {
+    public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
 

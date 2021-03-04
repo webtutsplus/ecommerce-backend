@@ -2,10 +2,9 @@ package com.webtutsplus.ecommerce.controller;
 
 
 import com.webtutsplus.ecommerce.dto.*;
-import com.webtutsplus.ecommerce.dto.userDTOs.SignInDto;
-import com.webtutsplus.ecommerce.dto.userDTOs.SignInResponseDto;
-import com.webtutsplus.ecommerce.dto.userDTOs.SignupDto;
-import com.webtutsplus.ecommerce.dto.userDTOs.UserCreateDto;
+import com.webtutsplus.ecommerce.dto.user.SignInDto;
+import com.webtutsplus.ecommerce.dto.user.SignInResponseDto;
+import com.webtutsplus.ecommerce.dto.user.SignupDto;
 import com.webtutsplus.ecommerce.exceptions.AuthenticationFailException;
 import com.webtutsplus.ecommerce.exceptions.CustomException;
 import com.webtutsplus.ecommerce.model.User;

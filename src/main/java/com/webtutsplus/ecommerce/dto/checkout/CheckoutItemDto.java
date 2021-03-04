@@ -1,6 +1,6 @@
-package com.webtutsplus.ecommerce.model;
+package com.webtutsplus.ecommerce.dto.checkout;
 
-public class CheckoutBody {
+public class CheckoutItemDto {
 
     private String imageUrl;
     private String productName;
@@ -9,9 +9,9 @@ public class CheckoutBody {
     private long productId;
     private int userId;
 
-    public CheckoutBody() {}
+    public CheckoutItemDto() {}
 
-    public CheckoutBody(String imageUrl, String productName, int quantity, double price, long productId, int userId) {
+    public CheckoutItemDto(String imageUrl, String productName, int quantity, double price, long productId, int userId) {
         this.imageUrl = imageUrl;
         this.productName = productName;
         this.quantity = quantity;

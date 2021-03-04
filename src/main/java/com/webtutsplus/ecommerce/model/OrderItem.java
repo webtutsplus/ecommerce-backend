@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "orderitems")
-public class OrderItems {
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +35,9 @@ public class OrderItems {
     @JoinColumn(name = "productId",referencedColumnName = "id",insertable = false,updatable = false)
     private Product product;
 
-    public OrderItems(){}
+    public OrderItem(){}
 
-    public OrderItems(Integer orderId, @NotNull Long product_id, @NotNull int quantity, @NotNull double price) {
+    public OrderItem(Integer orderId, @NotNull Long product_id, @NotNull int quantity, @NotNull double price) {
         this.productId = product_id;
         this.quantity = quantity;
         this.price = price;

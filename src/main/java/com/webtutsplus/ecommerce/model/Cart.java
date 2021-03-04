@@ -1,7 +1,7 @@
 package com.webtutsplus.ecommerce.model;
 
-import com.webtutsplus.ecommerce.dto.ProductDTOs.AddToCartDto;
-import com.webtutsplus.ecommerce.dto.ProductDTOs.CartDto;
+import com.webtutsplus.ecommerce.dto.cart.AddToCartDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;

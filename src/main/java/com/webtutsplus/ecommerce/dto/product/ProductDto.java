@@ -1,11 +1,7 @@
-package com.webtutsplus.ecommerce.dto.ProductDTOs;
+package com.webtutsplus.ecommerce.dto.product;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.webtutsplus.ecommerce.model.Product;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 public class ProductDto {

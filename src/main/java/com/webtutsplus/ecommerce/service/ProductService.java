@@ -1,6 +1,6 @@
 package com.webtutsplus.ecommerce.service;
 
-import com.webtutsplus.ecommerce.dto.ProductDTOs.ProductDto;
+import com.webtutsplus.ecommerce.dto.product.ProductDto;
 import com.webtutsplus.ecommerce.exceptions.ProductNotExistException;
 import com.webtutsplus.ecommerce.model.Category;
 import com.webtutsplus.ecommerce.model.Product;

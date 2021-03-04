@@ -1,7 +1,8 @@
 package com.webtutsplus.ecommerce.service;
 
-import com.webtutsplus.ecommerce.dto.ProductDTOs.AddToCartDto;
-import com.webtutsplus.ecommerce.dto.ProductDTOs.CartDto;
+import com.webtutsplus.ecommerce.dto.cart.AddToCartDto;
+import com.webtutsplus.ecommerce.dto.cart.CartDto;
+import com.webtutsplus.ecommerce.dto.cart.CartItemDto;
 import com.webtutsplus.ecommerce.exceptions.CartItemNotExistException;
 import com.webtutsplus.ecommerce.model.*;
 import com.webtutsplus.ecommerce.repository.CartRepository;
@@ -36,25 +37,25 @@ public class CartService {
         return cart;
     }
 
-    public CartCost listCartItems(int user_id) {
+    public CartDto listCartItems(int user_id) {
         List<Cart> cartList = cartRepository.findAllByUserIdOrderByCreatedDateDesc(user_id);
-        List<CartDto> cartItems = new ArrayList<>();
+        List<CartItemDto> cartItems = new ArrayList<>();
         for (Cart cart:cartList){
-            CartDto cartDto = getDtoFromCart(cart);
-            cartItems.add(cartDto);
+            CartItemDto cartItemDto = getDtoFromCart(cart);
+            cartItems.add(cartItemDto);
         }
         double totalCost = 0;
-        for (CartDto cartDto:cartItems){
-            totalCost += (cartDto.getProduct().getPrice()* cartDto.getQuantity());
+        for (CartItemDto cartItemDto :cartItems){
+            totalCost += (cartItemDto.getProduct().getPrice()* cartItemDto.getQuantity());
         }
-        CartCost cartCost = new CartCost(cartItems,totalCost);
-        return cartCost;
+        CartDto cartDto = new CartDto(cartItems,totalCost);
+        return cartDto;
     }
 
 
-    public static CartDto getDtoFromCart(Cart cart) {
-        CartDto cartDto = new CartDto(cart);
-        return cartDto;
+    public static CartItemDto getDtoFromCart(Cart cart) {
+        CartItemDto cartItemDto = new CartItemDto(cart);
+        return cartItemDto;
     }
 
 

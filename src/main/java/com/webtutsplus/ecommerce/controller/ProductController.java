@@ -1,7 +1,7 @@
 package com.webtutsplus.ecommerce.controller;
 
 import com.webtutsplus.ecommerce.common.ApiResponse;
-import com.webtutsplus.ecommerce.dto.ProductDTOs.ProductDto;
+import com.webtutsplus.ecommerce.dto.product.ProductDto;
 import com.webtutsplus.ecommerce.model.Category;
 import com.webtutsplus.ecommerce.service.CategoryService;
 import com.webtutsplus.ecommerce.service.ProductService;

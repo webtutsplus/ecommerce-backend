@@ -1,22 +1,20 @@
-package com.webtutsplus.ecommerce.dto.ProductDTOs;
+package com.webtutsplus.ecommerce.dto.cart;
 
 import com.webtutsplus.ecommerce.model.Cart;
 import com.webtutsplus.ecommerce.model.Product;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class CartDto {
+public class CartItemDto {
     private Integer id;
     private @NotNull Integer userId;
     private @NotNull Integer quantity;
     private @NotNull Product product;
 
-    public CartDto() {
+    public CartItemDto() {
     }
 
-    public CartDto(Cart cart) {
+    public CartItemDto(Cart cart) {
         this.setId(cart.getId());
         this.setUserId(cart.getUserId());
         this.setQuantity(cart.getQuantity());

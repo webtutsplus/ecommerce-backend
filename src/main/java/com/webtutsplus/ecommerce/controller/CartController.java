@@ -1,7 +1,8 @@
 package com.webtutsplus.ecommerce.controller;
 
 import com.webtutsplus.ecommerce.common.ApiResponse;
-import com.webtutsplus.ecommerce.dto.ProductDTOs.AddToCartDto;
+import com.webtutsplus.ecommerce.dto.cart.AddToCartDto;
+import com.webtutsplus.ecommerce.dto.cart.CartDto;
 import com.webtutsplus.ecommerce.exceptions.AuthenticationFailException;
 import com.webtutsplus.ecommerce.exceptions.CartItemNotExistException;
 import com.webtutsplus.ecommerce.exceptions.ProductNotExistException;
@@ -40,11 +41,11 @@ public class CartController {
 
     }
     @GetMapping("/")
-    public ResponseEntity<CartCost> getCartItems(@RequestParam("token") String token) throws AuthenticationFailException {
+    public ResponseEntity<CartDto> getCartItems(@RequestParam("token") String token) throws AuthenticationFailException {
         authenticationService.authenticate(token);
         int userId = authenticationService.getUser(token).getId();
-        CartCost cartCost = cartService.listCartItems(userId);
-        return new ResponseEntity<CartCost>(cartCost,HttpStatus.OK);
+        CartDto cartDto = cartService.listCartItems(userId);
+        return new ResponseEntity<CartDto>(cartDto,HttpStatus.OK);
     }
     @PutMapping("/update/{cartItemId}")
     public ResponseEntity<ApiResponse> updateCartItem(@RequestBody @Valid AddToCartDto cartDto,

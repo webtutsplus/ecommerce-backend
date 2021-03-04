@@ -3,10 +3,10 @@ package com.webtutsplus.ecommerce.service;
 
 import com.webtutsplus.ecommerce.config.MessageStrings;
 import com.webtutsplus.ecommerce.dto.*;
-import com.webtutsplus.ecommerce.dto.userDTOs.SignInDto;
-import com.webtutsplus.ecommerce.dto.userDTOs.SignInResponseDto;
-import com.webtutsplus.ecommerce.dto.userDTOs.SignupDto;
-import com.webtutsplus.ecommerce.dto.userDTOs.UserCreateDto;
+import com.webtutsplus.ecommerce.dto.user.SignInDto;
+import com.webtutsplus.ecommerce.dto.user.SignInResponseDto;
+import com.webtutsplus.ecommerce.dto.user.SignupDto;
+import com.webtutsplus.ecommerce.dto.user.UserCreateDto;
 import com.webtutsplus.ecommerce.enums.ResponseStatus;
 import com.webtutsplus.ecommerce.enums.Role;
 import com.webtutsplus.ecommerce.exceptions.AuthenticationFailException;
