@@ -12,6 +12,7 @@ import com.webtutsplus.ecommerce.dto.order.PlaceOrderDto;
 import com.webtutsplus.ecommerce.model.*;
 import com.webtutsplus.ecommerce.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -31,6 +32,11 @@ public class OrderService {
     @Autowired
     OrderItemsService orderItemsService;
 
+    @Value("${baseURL}")
+    private String baseURL;
+
+    @Value("${STRIPE_SECRET_KEY}")
+    private String apiKey;
 
     public int saveOrder(PlaceOrderDto orderDto, int userId, String sessionID){
         Order order = getOrderFromDto(orderDto,userId,sessionID);
@@ -93,14 +99,16 @@ public class OrderService {
     }
 
     public Session createSession(List<CheckoutItemDto> checkoutItemDtoList) throws StripeException {
-        //TODO get it from application properties
-        Stripe.apiKey = "sk_test_51Hr18ILR0wfBoBqmdYfX2snbVHPvMxGsUOUs0bZnOgJ28gGgGzOhvadzEjR0LDRS6naI0RMADLywiSiWD8pkhkEW00xnzbVoVE";
+
+        String successURL = baseURL + "payment/success";
+        String failedURL = baseURL + "payment/failed";
+
+        Stripe.apiKey = apiKey;
+
         long totalPrice = 0;
         for (CheckoutItemDto checkoutItemDto : checkoutItemDtoList) {
             totalPrice += checkoutItemDto.getPrice()*checkoutItemDto.getQuantity();
         }
-
-        System.out.println("totalPrice cart : " + totalPrice);
 
         List<SessionCreateParams.LineItem> sessionItemsList = new ArrayList<SessionCreateParams.LineItem>();
         for (CheckoutItemDto checkoutItemDto : checkoutItemDtoList) {
@@ -110,10 +118,9 @@ public class OrderService {
         SessionCreateParams params = SessionCreateParams.builder()
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
                 .setMode(SessionCreateParams.Mode.PAYMENT)
-                //TODO make a baseurl: FRRONT_END_BASE_URL in config and remove hardcode localhost
-                .setCancelUrl("http://localhost:8081/payment/failed")
+                .setCancelUrl(failedURL)
                 .addAllLineItem(sessionItemsList)
-                .setSuccessUrl("http://localhost:8081/payment/success")
+                .setSuccessUrl(successURL)
                 .build();
         return Session.create(params);
     }

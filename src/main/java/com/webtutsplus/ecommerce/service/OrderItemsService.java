@@ -12,11 +12,7 @@ import javax.transaction.Transactional;
 public class OrderItemsService {
 
     @Autowired
-    private final OrderItemsRepository orderItemsRepository;
-
-    public OrderItemsService(OrderItemsRepository orderItemsRepository){
-        this.orderItemsRepository = orderItemsRepository;
-    }
+    private OrderItemsRepository orderItemsRepository;
 
     public void addOrderedProducts(OrderItem orderItem) {
         orderItemsRepository.save(orderItem);
