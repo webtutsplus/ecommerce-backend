@@ -1,11 +1,10 @@
 package com.webtutsplus.ecommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.webtutsplus.ecommerce.dto.ProductDto;
+import com.webtutsplus.ecommerce.dto.product.ProductDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 @Entity
 @Table(name = "products")

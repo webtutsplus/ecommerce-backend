@@ -1,14 +1,9 @@
-package com.webtutsplus.ecommerce.dto.userDTOs;
+package com.webtutsplus.ecommerce.dto.user;
 
-
-import com.webtutsplus.ecommerce.enums.Role;
-
-public class UserCreateDto {
-
+public class SignupDto {
     private String firstName;
     private String lastName;
     private String email;
-    private Role role;
     private String password;
 
     public String getFirstName() {
@@ -33,14 +28,6 @@ public class UserCreateDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public String getPassword() {

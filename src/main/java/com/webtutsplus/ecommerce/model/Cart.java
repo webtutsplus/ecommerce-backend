@@ -1,7 +1,7 @@
 package com.webtutsplus.ecommerce.model;
 
-import com.webtutsplus.ecommerce.dto.AddToCartDto;
-import com.webtutsplus.ecommerce.dto.CartDto;
+import com.webtutsplus.ecommerce.dto.cart.AddToCartDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -33,34 +33,10 @@ public class Cart {
     public Cart() {
     }
 
-
-    public Cart(CartDto cartDto, Product product,int userId){
-        this.userId = userId;
-        this.productId = product.getId();
-        this.quantity = cartDto.getQuantity();
-        this.product = product;
-        this.createdDate = new Date();
-    }
-
     public Cart(AddToCartDto addToCartDto,int userId){
         this.userId = userId;
         this.productId = addToCartDto.getProductId();
         this.quantity = addToCartDto.getQuantity();
-        this.createdDate = new Date();
-    }
-
-
-    public Cart(@NotBlank Integer userId, @NotBlank Long productId, int quantity) {
-        this.userId = userId;
-        this.productId = productId;
-        this.createdDate = new Date();
-        this.quantity = quantity;
-    }
-
-    public Cart(CartDto cartDto, Product product) {
-        this.productId = product.getId();
-        this.quantity = cartDto.getQuantity();
-        this.product = product;
         this.createdDate = new Date();
     }
 
