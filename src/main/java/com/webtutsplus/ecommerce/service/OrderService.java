@@ -105,11 +105,6 @@ public class OrderService {
 
         Stripe.apiKey = apiKey;
 
-        long totalPrice = 0;
-        for (CheckoutItemDto checkoutItemDto : checkoutItemDtoList) {
-            totalPrice += checkoutItemDto.getPrice()*checkoutItemDto.getQuantity();
-        }
-
         List<SessionCreateParams.LineItem> sessionItemsList = new ArrayList<SessionCreateParams.LineItem>();
         for (CheckoutItemDto checkoutItemDto : checkoutItemDtoList) {
             sessionItemsList.add(createSessionLineItem(checkoutItemDto));

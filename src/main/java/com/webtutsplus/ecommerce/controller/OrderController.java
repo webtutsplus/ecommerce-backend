@@ -49,7 +49,6 @@ public class OrderController {
     }
 
     @PostMapping("/create-checkout-session")
-    //TODO comment controller should be lightweight and logic should move to service for better reusability
     public ResponseEntity<StripeResponse> checkoutList(@RequestBody List<CheckoutItemDto> checkoutItemDtoList) throws StripeException {
         Session session = orderService.createSession(checkoutItemDtoList);
         StripeResponse stripeResponse = new StripeResponse(session.getId());
