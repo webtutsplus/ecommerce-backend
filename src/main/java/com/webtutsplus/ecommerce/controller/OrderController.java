@@ -56,15 +56,10 @@ public class OrderController {
         return new ResponseEntity<StripeResponse>(stripeResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/single-checkout")
-    public ResponseEntity<StripeResponse> singleitemcheckout(@RequestBody CheckoutItemDto checkoutItemDto, @RequestParam String token) throws StripeException {
-
-        try {
-            int id = authenticationService.getUser(token).getId();
-
-        } catch (NullPointerException ignored) {
-            return ResponseEntity.notFound().build();
-        }
+    @PostMapping("/checkout-single-product")
+    public ResponseEntity<StripeResponse> singleitemcheckout(@RequestBody CheckoutItemDto checkoutItemDto, @RequestParam String token) throws StripeException, NullPointerException {
+        int id = authenticationService.getUser(token).getId();
+        checkoutItemDto.setUserId(id);
         Session session = orderService.createSessionforSingleItem(checkoutItemDto);
         StripeResponse stripeResponse = new StripeResponse(session.getId());
         return new ResponseEntity<StripeResponse>(stripeResponse, HttpStatus.OK);

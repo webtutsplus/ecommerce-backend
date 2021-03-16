@@ -47,18 +47,6 @@ public class UserController {
     public SignInResponseDto Signup(@RequestBody SignInDto signInDto) throws CustomException {
         return userService.signIn(signInDto);
     }
-    @GetMapping("/getuserid")
-    public ResponseEntity<Integer> getid(@RequestParam("token") String token) throws AuthenticationFailException,NullPointerException {
-        try {
-            if(authenticationService.getUser(token).getId() != null)
-                return new ResponseEntity<Integer>(authenticationService.getUser(token).getId(), HttpStatus.OK);
-        }catch (NullPointerException ignored)  {
-
-        }
-
-
-        return new ResponseEntity<Integer>(-1,HttpStatus.OK);
-    }
 //    @PostMapping("/updateUser")
 //    public ResponseDto updateUser(@RequestParam("token") String token, @RequestBody UserUpdateDto userUpdateDto) {
 //        authenticationService.authenticate(token);
