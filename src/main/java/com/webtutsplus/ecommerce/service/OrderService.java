@@ -119,6 +119,26 @@ public class OrderService {
                 .build();
         return Session.create(params);
     }
+    public Session createSessionforSingleItem (CheckoutItemDto checkoutItemDto) throws StripeException {
+
+        String successURL = baseURL + "payment/success";
+        String failedURL = baseURL + "payment/failed";
+
+        Stripe.apiKey = apiKey;
+
+        List<SessionCreateParams.LineItem> sessionItemsList = new ArrayList<SessionCreateParams.LineItem>();
+        sessionItemsList.add(createSessionLineItem(checkoutItemDto));
+
+        SessionCreateParams params = SessionCreateParams.builder()
+                .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
+                .setMode(SessionCreateParams.Mode.PAYMENT)
+                .setCancelUrl(failedURL)
+                .addAllLineItem(sessionItemsList)
+                .setSuccessUrl(successURL)
+                .build();
+        return Session.create(params);
+    }
+
 }
 
 

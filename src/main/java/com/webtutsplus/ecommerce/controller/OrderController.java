@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
 
 import java.util.*;
 
@@ -45,14 +46,28 @@ public class OrderController {
         authenticationService.authenticate(token);
         int userId = authenticationService.getUser(token).getId();
         List<Order> orderDtoList = orderService.listOrders(userId);
-        return new ResponseEntity<List<Order>>(orderDtoList,HttpStatus.OK);
+        return new ResponseEntity<List<Order>>(orderDtoList, HttpStatus.OK);
     }
 
     @PostMapping("/create-checkout-session")
     public ResponseEntity<StripeResponse> checkoutList(@RequestBody List<CheckoutItemDto> checkoutItemDtoList) throws StripeException {
         Session session = orderService.createSession(checkoutItemDtoList);
         StripeResponse stripeResponse = new StripeResponse(session.getId());
-        return new ResponseEntity<StripeResponse>(stripeResponse,HttpStatus.OK);
+        return new ResponseEntity<StripeResponse>(stripeResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/single-checkout")
+    public ResponseEntity<StripeResponse> singleitemcheckout(@RequestBody CheckoutItemDto checkoutItemDto, @RequestParam String token) throws StripeException {
+
+        try {
+            int id = authenticationService.getUser(token).getId();
+
+        } catch (NullPointerException ignored) {
+            return ResponseEntity.notFound().build();
+        }
+        Session session = orderService.createSessionforSingleItem(checkoutItemDto);
+        StripeResponse stripeResponse = new StripeResponse(session.getId());
+        return new ResponseEntity<StripeResponse>(stripeResponse, HttpStatus.OK);
     }
 
 }
