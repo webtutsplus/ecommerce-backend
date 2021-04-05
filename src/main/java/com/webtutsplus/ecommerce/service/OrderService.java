@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -51,6 +52,11 @@ public class OrderService {
     public List<Order> listOrders(int user_id) {
         List<Order> orderList = orderRepository.findAllByUserIdOrderByCreatedDateDesc(user_id);
         return orderList;
+    }
+
+    public Optional<Order> getOrder(int order_id) {
+        Optional<Order> order = orderRepository.findById(order_id);
+        return order;
     }
 
 

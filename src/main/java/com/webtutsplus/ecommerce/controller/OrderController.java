@@ -55,4 +55,12 @@ public class OrderController {
         return new ResponseEntity<StripeResponse>(stripeResponse,HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Order>> getAllOrders(@PathVariable("id") Integer id, @RequestParam("token") String token) throws AuthenticationFailException {
+        authenticationService.authenticate(token);
+        int userId = authenticationService.getUser(token).getId();
+        Optional<Order> order = orderService.getOrder(id);
+        return new ResponseEntity<>(order,HttpStatus.OK);
+    }
+
 }
