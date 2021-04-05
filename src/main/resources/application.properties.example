@@ -21,4 +21,4 @@ STRIPE_SECRET_KEY = STRIPE SECRET KEY
 #For development use this url
 #baseURL=http://localhost:8081/
 #For production use this url
-#baseURL=http://remotedevs.org:8000/
+baseURL=http://remotedevs.org:8000/
