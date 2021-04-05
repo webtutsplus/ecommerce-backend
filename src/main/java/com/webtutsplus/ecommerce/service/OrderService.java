@@ -50,8 +50,8 @@ public class OrderService {
         return order;
     }
 
-    public List<Order> listOrders(int user_id) {
-        List<Order> orderList = orderRepository.findAllByUserIdOrderByCreatedDateDesc(user_id);
+    public List<Order> listOrders(int userId) {
+        List<Order> orderList = orderRepository.findAllByUserIdOrderByCreatedDateDesc(userId);
         return orderList;
     }
 
