@@ -9,6 +9,7 @@ import com.webtutsplus.ecommerce.dto.cart.CartItemDto;
 import com.webtutsplus.ecommerce.dto.checkout.CheckoutItemDto;
 import com.webtutsplus.ecommerce.dto.order.OrderDto;
 import com.webtutsplus.ecommerce.dto.order.PlaceOrderDto;
+import com.webtutsplus.ecommerce.exceptions.OrderNotFoundException;
 import com.webtutsplus.ecommerce.model.*;
 import com.webtutsplus.ecommerce.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,12 @@ public class OrderService {
         return orderList;
     }
 
-    public Optional<Order> getOrder(int order_id) {
+    public Order getOrder(int order_id) throws OrderNotFoundException {
         Optional<Order> order = orderRepository.findById(order_id);
-        return order;
+        if (order.isPresent()) {
+            return order.get();
+        }
+        throw new OrderNotFoundException("Order not found");
     }
 
 

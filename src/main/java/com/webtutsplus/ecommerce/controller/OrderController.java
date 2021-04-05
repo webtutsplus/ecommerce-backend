@@ -11,6 +11,7 @@ import com.webtutsplus.ecommerce.dto.checkout.CheckoutItemDto;
 import com.webtutsplus.ecommerce.dto.checkout.StripeResponse;
 import com.webtutsplus.ecommerce.dto.order.PlaceOrderDto;
 import com.webtutsplus.ecommerce.exceptions.AuthenticationFailException;
+import com.webtutsplus.ecommerce.exceptions.OrderNotFoundException;
 import com.webtutsplus.ecommerce.exceptions.ProductNotExistException;
 import com.webtutsplus.ecommerce.model.*;
 import com.webtutsplus.ecommerce.service.*;
@@ -56,11 +57,17 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Order>> getAllOrders(@PathVariable("id") Integer id, @RequestParam("token") String token) throws AuthenticationFailException {
+    public ResponseEntity<Object> getAllOrders(@PathVariable("id") Integer id, @RequestParam("token") String token) throws AuthenticationFailException {
         authenticationService.authenticate(token);
         int userId = authenticationService.getUser(token).getId();
-        Optional<Order> order = orderService.getOrder(id);
-        return new ResponseEntity<>(order,HttpStatus.OK);
+        try {
+            Order order = orderService.getOrder(id);
+            return new ResponseEntity<>(order,HttpStatus.OK);
+        }
+        catch (OrderNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+
     }
 
 }
