@@ -56,7 +56,7 @@ public class OrderService {
     }
 
     public Order getOrder(int orderId) throws OrderNotFoundException {
-        Optional<Order> order = orderRepository.findById(order_id);
+        Optional<Order> order = orderRepository.findById(orderId);
         if (order.isPresent()) {
             return order.get();
         }
