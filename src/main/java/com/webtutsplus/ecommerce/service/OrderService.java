@@ -9,6 +9,7 @@ import com.webtutsplus.ecommerce.dto.cart.CartItemDto;
 import com.webtutsplus.ecommerce.dto.checkout.CheckoutItemDto;
 import com.webtutsplus.ecommerce.dto.order.OrderDto;
 import com.webtutsplus.ecommerce.dto.order.PlaceOrderDto;
+import com.webtutsplus.ecommerce.exceptions.OrderNotFoundException;
 import com.webtutsplus.ecommerce.model.*;
 import com.webtutsplus.ecommerce.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -48,9 +50,17 @@ public class OrderService {
         return order;
     }
 
-    public List<Order> listOrders(int user_id) {
-        List<Order> orderList = orderRepository.findAllByUserIdOrderByCreatedDateDesc(user_id);
+    public List<Order> listOrders(int userId) {
+        List<Order> orderList = orderRepository.findAllByUserIdOrderByCreatedDateDesc(userId);
         return orderList;
+    }
+
+    public Order getOrder(int orderId) throws OrderNotFoundException {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isPresent()) {
+            return order.get();
+        }
+        throw new OrderNotFoundException("Order not found");
     }
 
 
