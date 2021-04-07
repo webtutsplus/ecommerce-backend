@@ -21,4 +21,11 @@ STRIPE_SECRET_KEY = STRIPE SECRET KEY
 #For development use this url
 #baseURL=http://localhost:8081/
 #For production use this url
-baseURL=http://remotedevs.org:8000/
+baseURL=https://infallible-swartz-b50174.netlify.app
+
+server.port=8443
+security.require-ssl=true
+server.ssl.key-store=/etc/letsencrypt/live/remotedevs.org/keystore.p12
+server.ssl.key-store-password=password
+server.ssl.keyStoreType=PKCS12
+server.ssl.keyAlias=tomcat
