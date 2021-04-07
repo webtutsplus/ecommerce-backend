@@ -15,8 +15,8 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
 logging.level.org.hibernate.SQL=debug
 spring.jpa.properties.hibernate.globally_quoted_identifiers=true
 
-STRIPE_PUBLIC_KEY = pk_test_51Hr18ILR0wfBoBqmrZFhIWWOk0CA8PFS3cEMwh4S1S6jRUzVucZ26dbGIYRk5ezdYlMgUkQmYHGJOsKR35uEHgvV00IXALUhYx
-STRIPE_SECRET_KEY = sk_test_51Hr18ILR0wfBoBqmdYfX2snbVHPvMxGsUOUs0bZnOgJ28gGgGzOhvadzEjR0LDRS6naI0RMADLywiSiWD8pkhkEW00xnzbVoVE
+STRIPE_PUBLIC_KEY = STRIPE PUBLIC KEY
+STRIPE_SECRET_KEY = STRIPE SECRET KEY
 
 #For development use this url
 #baseURL=http://localhost:8081/
