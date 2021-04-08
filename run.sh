@@ -2,7 +2,7 @@
 #git checkout master
 #git pull
 
-sudo kill -9 `sudo lsof -t -i:8080`
+sudo kill -9 `sudo lsof -t -i:8443`
 mvn package -DskipTests=true
 # create upload-dir
 #mkdir upload-dir
