@@ -37,7 +37,7 @@ public class OrderService {
     @Value("https://infallible-swartz-b50174.netlify.app")
     private String baseURL;
 
-    @Value("${STRIPE_PUBLIC_KEY}")
+    @Value("${STRIPE_SECRET_KEY}")
     private String apiKey;
 
     public int saveOrder(PlaceOrderDto orderDto, int userId, String sessionID){
