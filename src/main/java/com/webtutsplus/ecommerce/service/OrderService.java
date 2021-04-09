@@ -34,7 +34,7 @@ public class OrderService {
     @Autowired
     OrderItemsService orderItemsService;
 
-    @Value("https://infallible-swartz-b50174.netlify.app")
+    @Value("https://infallible-swartz-b50174.netlify.app/")
     private String baseURL;
 
     @Value("${STRIPE_SECRET_KEY}")
