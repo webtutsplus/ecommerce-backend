@@ -10,10 +10,8 @@ public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer orderItemId;
+    private Integer id;
 
-    @Column(name = "productId")
-    private @NotNull Long productId;
 
     @Column(name = "quantity")
     private @NotNull int quantity;
@@ -21,27 +19,25 @@ public class OrderItem {
     @Column(name = "price")
     private @NotNull double price;
 
-    @Column(name = "order_id")
-    private Integer orderId;
 
     @Column(name = "created_date")
     private Date createdDate;
 
     @ManyToOne
-    @JoinColumn(name = "order_id",referencedColumnName = "id",insertable = false,updatable = false)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order;
 
     @OneToOne
-    @JoinColumn(name = "productId",referencedColumnName = "id",insertable = false,updatable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
     public OrderItem(){}
 
-    public OrderItem(Integer orderId, @NotNull Long product_id, @NotNull int quantity, @NotNull double price) {
-        this.productId = product_id;
+    public OrderItem(Order order, @NotNull Product product, @NotNull int quantity, @NotNull double price) {
+        this.product = product;
         this.quantity = quantity;
         this.price = price;
-        this.orderId=orderId;
+        this.order= order;
         this.createdDate = new Date();
     }
 
@@ -53,21 +49,6 @@ public class OrderItem {
         this.product = product;
     }
 
-    public Integer getOrder_id() {
-        return orderItemId;
-    }
-
-    public void setOrder_id(Integer order_id) {
-        this.orderItemId = order_id;
-    }
-
-    public Long getProduct_id() {
-        return productId;
-    }
-
-    public void setProduct_id(Long product_id) {
-        this.productId = product_id;
-    }
 
     public int getQuantity() {
         return quantity;

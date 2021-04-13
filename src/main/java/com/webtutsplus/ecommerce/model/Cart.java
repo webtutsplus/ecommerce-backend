@@ -1,5 +1,6 @@
 package com.webtutsplus.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.webtutsplus.ecommerce.dto.cart.AddToCartDto;
 
 import javax.persistence.*;
@@ -14,18 +15,18 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "user_id")
-    private @NotBlank Integer userId;
-
-    @Column(name = "product_id")
-    private @NotBlank Long productId;
 
     @Column(name = "created_date")
     private Date createdDate;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
+
+    @JsonIgnore
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "user_id")
+    private User user;
 
 
     private int quantity;
@@ -33,10 +34,10 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(AddToCartDto addToCartDto,int userId){
-        this.userId = userId;
-        this.productId = addToCartDto.getProductId();
-        this.quantity = addToCartDto.getQuantity();
+    public Cart(Product product, int quantity, User user){
+        this.user = user;
+        this.product = product;
+        this.quantity = quantity;
         this.createdDate = new Date();
     }
 
@@ -48,20 +49,12 @@ public class Cart {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Date getCreatedDate() {

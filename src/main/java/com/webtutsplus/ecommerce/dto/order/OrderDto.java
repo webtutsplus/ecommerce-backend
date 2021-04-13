@@ -12,7 +12,7 @@ public class OrderDto {
 
     public OrderDto(Order order) {
         this.setId(order.getId());
-        this.setUserId(order.getUserId());
+        //this.setUserId(order.getUserId());
     }
 
     public Integer getId() {

@@ -1,6 +1,7 @@
 package com.webtutsplus.ecommerce.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.webtutsplus.ecommerce.dto.order.PlaceOrderDto;
 
 import javax.persistence.*;
@@ -9,15 +10,13 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="order")
+@Table(name="orders")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "user_id")
-    private @NotBlank Integer userId;
 
     @Column(name = "created_date")
     private Date createdDate;
@@ -25,22 +24,22 @@ public class Order {
     @Column(name = "total_price")
     private Double totalPrice;
 
-    @Column(name = "session-id")
+    @Column(name = "session_id")
     private String sessionId;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name = "order_id",referencedColumnName = "id",insertable = false,updatable = false)
+    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne()
+    @JsonIgnore
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public Order() {
     }
 
-    public Order(PlaceOrderDto orderDto, int userId, String sessionId){
-        this.userId = userId;
+    public Order(PlaceOrderDto orderDto, User user, String sessionId){
+        this.user = user;
         this.createdDate = new Date();
         this.totalPrice = orderDto.getTotalPrice();
         this.sessionId = sessionId;
@@ -54,14 +53,6 @@ public class Order {
         this.orderItems = orderItems;
     }
 
-    /*public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }*/
-
     public Integer getId() {
         return id;
     }
@@ -70,13 +61,6 @@ public class Order {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     public Date getCreatedDate() {
         return createdDate;
@@ -92,5 +76,21 @@ public class Order {
 
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

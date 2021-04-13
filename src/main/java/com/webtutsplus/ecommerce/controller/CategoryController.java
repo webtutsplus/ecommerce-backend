@@ -18,16 +18,16 @@ import com.webtutsplus.ecommerce.service.CategoryService;
 @RequestMapping("/category")
 
 public class CategoryController {
-	
+
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@GetMapping("/")
     public ResponseEntity<List<Category>> getCategories() {
         List<Category> body = categoryService.listCategories();
         return new ResponseEntity<List<Category>>(body, HttpStatus.OK);
     }
-	
+
 	@PostMapping("/create")
 	public ResponseEntity<ApiResponse> createCategory(@Valid @RequestBody Category category) {
 		if (Helper.notNull(categoryService.readCategory(category.getCategoryName()))) {
@@ -39,7 +39,7 @@ public class CategoryController {
 
 	//TODO create an UPDATE method Giridhar
 	@PostMapping("/update/{categoryID}")
-	public ResponseEntity<ApiResponse> updateCategory(@PathVariable("categoryID") long categoryID, @Valid @RequestBody Category category) {
+	public ResponseEntity<ApiResponse> updateCategory(@PathVariable("categoryID") Integer categoryID, @Valid @RequestBody Category category) {
 		// Check to see if the category exists.
 		if (Helper.notNull(categoryService.readCategory(categoryID))) {
 			// If the category exists then update it.

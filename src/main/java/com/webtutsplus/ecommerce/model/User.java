@@ -1,9 +1,11 @@
 package com.webtutsplus.ecommerce.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.webtutsplus.ecommerce.enums.Role;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -27,6 +29,11 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",
+            fetch = FetchType.LAZY)
+    private List<Order> orders;
 
     public Integer getId() {
         return id;
@@ -85,5 +92,13 @@ public class User {
     }
 
     public User() {
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

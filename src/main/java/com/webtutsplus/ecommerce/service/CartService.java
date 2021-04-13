@@ -27,18 +27,14 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public void addToCart(AddToCartDto addToCartDto,int userId){
-        Cart cart = getAddToCartFromDto(addToCartDto,userId);
+    public void addToCart(AddToCartDto addToCartDto, Product product, User user){
+        Cart cart = new Cart(product, addToCartDto.getQuantity(), user);
         cartRepository.save(cart);
     }
 
-    private Cart getAddToCartFromDto(AddToCartDto addToCartDto, int userId) {
-        Cart cart = new Cart(addToCartDto, userId);
-        return cart;
-    }
 
-    public CartDto listCartItems(int user_id) {
-        List<Cart> cartList = cartRepository.findAllByUserIdOrderByCreatedDateDesc(user_id);
+    public CartDto listCartItems(User user) {
+        List<Cart> cartList = cartRepository.findAllByUserOrderByCreatedDateDesc(user);
         List<CartItemDto> cartItems = new ArrayList<>();
         for (Cart cart:cartList){
             CartItemDto cartItemDto = getDtoFromCart(cart);
@@ -59,12 +55,9 @@ public class CartService {
     }
 
 
-    public void updateCartItem(AddToCartDto cartDto,int userId,Product product){
-        Cart cart = getAddToCartFromDto(cartDto,userId);
+    public void updateCartItem(AddToCartDto cartDto, User user,Product product){
+        Cart cart = cartRepository.getOne(cartDto.getId());
         cart.setQuantity(cartDto.getQuantity());
-        cart.setUserId(userId);
-        cart.setId(cartDto.getId());
-        cart.setProductId(product.getId());
         cart.setCreatedDate(new Date());
         cartRepository.save(cart);
     }
@@ -81,6 +74,9 @@ public class CartService {
     }
 
 
+    public void deleteUserCartItems(User user) {
+        cartRepository.deleteByUser(user);
+    }
 }
 
 

@@ -36,16 +36,16 @@ public class OrderController {
     public ResponseEntity<ApiResponse> placeOrder(@RequestParam("token") String token, @RequestParam("sessionId") String sessionId)
             throws ProductNotExistException, AuthenticationFailException {
         authenticationService.authenticate(token);
-        int userId = authenticationService.getUser(token).getId();
-        orderService.placeOrder(userId, sessionId);
+        User user = authenticationService.getUser(token);
+        orderService.placeOrder(user, sessionId);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Order has been placed"), HttpStatus.CREATED);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<Order>> getAllOrders(@RequestParam("token") String token) throws AuthenticationFailException {
         authenticationService.authenticate(token);
-        int userId = authenticationService.getUser(token).getId();
-        List<Order> orderDtoList = orderService.listOrders(userId);
+        User user = authenticationService.getUser(token);
+        List<Order> orderDtoList = orderService.listOrders(user);
         return new ResponseEntity<List<Order>>(orderDtoList,HttpStatus.OK);
     }
 
@@ -59,7 +59,7 @@ public class OrderController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getAllOrders(@PathVariable("id") Integer id, @RequestParam("token") String token) throws AuthenticationFailException {
         authenticationService.authenticate(token);
-        int userId = authenticationService.getUser(token).getId();
+        User user = authenticationService.getUser(token);
         try {
             Order order = orderService.getOrder(id);
             return new ResponseEntity<>(order,HttpStatus.OK);

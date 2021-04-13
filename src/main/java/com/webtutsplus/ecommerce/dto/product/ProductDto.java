@@ -6,12 +6,12 @@ import javax.validation.constraints.NotNull;
 
 public class ProductDto {
 
-    private Long id;
+    private Integer id;
     private @NotNull String name;
     private @NotNull String imageURL;
     private @NotNull double price;
     private @NotNull String description;
-    private @NotNull Long categoryId;
+    private @NotNull Integer categoryId;
 
     public ProductDto(Product product) {
         this.setId(product.getId());
@@ -22,7 +22,7 @@ public class ProductDto {
         this.setCategoryId(product.getCategory().getId());
     }
 
-    public ProductDto(@NotNull String name, @NotNull String imageURL, @NotNull double price, @NotNull String description, @NotNull Long categoryId) {
+    public ProductDto(@NotNull String name, @NotNull String imageURL, @NotNull double price, @NotNull String description, @NotNull Integer categoryId) {
         this.name = name;
         this.imageURL = imageURL;
         this.price = price;
@@ -33,11 +33,11 @@ public class ProductDto {
     public ProductDto() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -73,11 +73,11 @@ public class ProductDto {
         this.description = description;
     }
 
-    public Long getCategoryId() {
+    public Integer getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Long categoryId) {
+    public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
 }

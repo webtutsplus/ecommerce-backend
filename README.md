@@ -50,3 +50,13 @@ firstname: admin
 ##export database 
 mysqldump -u root -p ecommerce > database-dump.sql
 scp root@104.236.26.66:database-dump.sql .
+
+
+certbot-auto certonly -a standalone -d remotedevs.org
+
+openssl pkcs12 -export -in fullchain.pem \ 
+                 -inkey privkey.pem \ 
+                 -out keystore.p12 
+                 -name tomcat \
+                 -CAfile chain.pem \
+                 -caname root

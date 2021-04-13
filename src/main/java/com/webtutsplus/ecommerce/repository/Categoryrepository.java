@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.webtutsplus.ecommerce.model.Category;
 
 @Repository
-public interface Categoryrepository extends JpaRepository<Category, Long> {
-	
+public interface Categoryrepository extends JpaRepository<Category, Integer> {
+
 	Category findByCategoryName(String categoryName);
-	
+
 }

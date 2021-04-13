@@ -17,27 +17,25 @@ public class WishList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "user_id")
-    private @NotBlank Integer userId;
 
-    @Column(name = "product_id")
-    private @NotBlank Long productId;
-
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false, name = "user_id")
+    private User user;
 
     @Column(name = "created_date")
     private Date createdDate;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne()
+    @JoinColumn(name = "product_id")
     private Product product;
 
     public WishList() {
     }
 
 
-    public WishList(Integer userId, Long productId) {
-        this.userId = userId;
-        this.productId=productId;
+    public WishList(User user, Product product) {
+        this.user = user;
+        this.product = product;
         this.createdDate = new Date();
     }
 
@@ -45,39 +43,31 @@ public class WishList {
         return id;
     }
 
-    public Long getProductId() {
-        return productId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Product getProduct() {
         return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

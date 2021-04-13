@@ -7,7 +7,6 @@ import com.stripe.param.checkout.SessionCreateParams;
 import com.webtutsplus.ecommerce.dto.cart.CartDto;
 import com.webtutsplus.ecommerce.dto.cart.CartItemDto;
 import com.webtutsplus.ecommerce.dto.checkout.CheckoutItemDto;
-import com.webtutsplus.ecommerce.dto.order.OrderDto;
 import com.webtutsplus.ecommerce.dto.order.PlaceOrderDto;
 import com.webtutsplus.ecommerce.exceptions.OrderNotFoundException;
 import com.webtutsplus.ecommerce.model.*;
@@ -34,24 +33,24 @@ public class OrderService {
     @Autowired
     OrderItemsService orderItemsService;
 
-    @Value("https://infallible-swartz-b50174.netlify.app/")
+    @Value("${BASE_URL}")
     private String baseURL;
 
     @Value("${STRIPE_SECRET_KEY}")
     private String apiKey;
 
-    public int saveOrder(PlaceOrderDto orderDto, int userId, String sessionID){
-        Order order = getOrderFromDto(orderDto,userId,sessionID);
-        return orderRepository.save(order).getId();
+    public Order saveOrder(PlaceOrderDto orderDto, User user, String sessionID){
+        Order order = getOrderFromDto(orderDto, user, sessionID);
+        return orderRepository.save(order);
     }
 
-    private Order getOrderFromDto(PlaceOrderDto orderDto, int userId,String sessionID) {
-        Order order = new Order(orderDto,userId,sessionID);
+    private Order getOrderFromDto(PlaceOrderDto orderDto, User user, String sessionID) {
+        Order order = new Order(orderDto, user,sessionID);
         return order;
     }
 
-    public List<Order> listOrders(int userId) {
-        List<Order> orderList = orderRepository.findAllByUserIdOrderByCreatedDateDesc(userId);
+    public List<Order> listOrders(User user) {
+        List<Order> orderList = orderRepository.findAllByUserOrderByCreatedDateDesc(user);
         return orderList;
     }
 
@@ -64,30 +63,24 @@ public class OrderService {
     }
 
 
-    public static OrderDto getDtoFromOrder(Order order) {
-        OrderDto orderDto = new OrderDto(order);
-        return orderDto;
-    }
-
-
-    public void placeOrder(int userId, String sessionId) {
-        CartDto cartDto = cartService.listCartItems(userId);
+    public void placeOrder(User user, String sessionId) {
+        CartDto cartDto = cartService.listCartItems(user);
 
         PlaceOrderDto placeOrderDto = new PlaceOrderDto();
-        placeOrderDto.setUserId(userId);
+        placeOrderDto.setUser(user);
         placeOrderDto.setTotalPrice(cartDto.getTotalCost());
 
-        int orderId = saveOrder(placeOrderDto, userId, sessionId);
+        Order newOrder = saveOrder(placeOrderDto, user, sessionId);
         List<CartItemDto> cartItemDtoList = cartDto.getcartItems();
         for (CartItemDto cartItemDto : cartItemDtoList) {
             OrderItem orderItem = new OrderItem(
-                    orderId,
-                    cartItemDto.getProduct().getId(),
+                    newOrder,
+                    cartItemDto.getProduct(),
                     cartItemDto.getQuantity(),
                     cartItemDto.getProduct().getPrice());
             orderItemsService.addOrderedProducts(orderItem);
         }
-        cartService.deleteCartItems(userId);
+        cartService.deleteUserCartItems(user);
     }
 
     SessionCreateParams.LineItem.PriceData createPriceData(CheckoutItemDto checkoutItemDto) {
