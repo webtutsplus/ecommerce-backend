@@ -3,10 +3,10 @@
  
 Backend
 https://github.com/webtutsplus/ecommerce-vuejs
-limitless-lake-55070.herokuapp.com
+https://limitless-lake-55070.herokuapp.com/swagger-ui.html
 Frontend
 https://github.com/webtutsplus/ecommerce-vuejs
-infallible-swartz-b50174.netlify.app
+https://infallible-swartz-b50174.netlify.app/
 
 
 
