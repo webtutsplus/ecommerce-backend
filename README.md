@@ -1,5 +1,14 @@
 # ecommerce
  Ecommerce backend apis
+ 
+Backend
+https://github.com/webtutsplus/ecommerce-vuejs
+limitless-lake-55070.herokuapp.com
+Frontend
+https://github.com/webtutsplus/ecommerce-vuejs
+infallible-swartz-b50174.netlify.app
+
+
 
 * This is a Maven Project. Ensure, Maven is installed on your system.
 * It is Recommended that you use Linux Based OS.
@@ -34,29 +43,10 @@ mvn package
 java -jar -Dspring.profiles.active=prod <package name in target>
 
 ## Run in production server with latest changes in master
-* ssh root@167.99.37.15
-* (use password: webTuts9plus)
-* cd ecommerce
-* git pull
-* sh run.sh 
-* you should see the swagger UI in http://167.99.37.15:8080/api/swagger-ui.html
+
 
 #admin access
 email: admin@gmail.com
 password: admin
 firstname: admin
 
-
-##export database 
-mysqldump -u root -p ecommerce > database-dump.sql
-scp root@104.236.26.66:database-dump.sql .
-
-
-certbot-auto certonly -a standalone -d remotedevs.org
-
-openssl pkcs12 -export -in fullchain.pem \ 
-                 -inkey privkey.pem \ 
-                 -out keystore.p12 
-                 -name tomcat \
-                 -CAfile chain.pem \
-                 -caname root
