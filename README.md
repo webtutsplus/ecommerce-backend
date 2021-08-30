@@ -2,7 +2,7 @@
  Ecommerce backend apis
  
 Backend
-https://github.com/webtutsplus/ecommerce-vuejs
+https://github.com/webtutsplus/ecommerce-backend
 
 https://limitless-lake-55070.herokuapp.com/swagger-ui.html 
 
