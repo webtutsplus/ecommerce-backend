@@ -44,14 +44,12 @@ public class CartService {
         for (CartItemDto cartItemDto :cartItems){
             totalCost += (cartItemDto.getProduct().getPrice()* cartItemDto.getQuantity());
         }
-        CartDto cartDto = new CartDto(cartItems,totalCost);
-        return cartDto;
+        return new CartDto(cartItems,totalCost);
     }
 
 
     public static CartItemDto getDtoFromCart(Cart cart) {
-        CartItemDto cartItemDto = new CartItemDto(cart);
-        return cartItemDto;
+        return new CartItemDto(cart);
     }
 
 
