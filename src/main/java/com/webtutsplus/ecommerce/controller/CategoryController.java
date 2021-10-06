@@ -37,7 +37,6 @@ public class CategoryController {
 		return new ResponseEntity<ApiResponse>(new ApiResponse(true, "created the category"), HttpStatus.CREATED);
 	}
 
-	//TODO create an UPDATE method Giridhar
 	@PostMapping("/update/{categoryID}")
 	public ResponseEntity<ApiResponse> updateCategory(@PathVariable("categoryID") Integer categoryID, @Valid @RequestBody Category category) {
 		// Check to see if the category exists.

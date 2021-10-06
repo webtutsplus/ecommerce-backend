@@ -2,10 +2,8 @@ package com.webtutsplus.ecommerce.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.webtutsplus.ecommerce.dto.order.PlaceOrderDto;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -38,12 +36,6 @@ public class Order {
     public Order() {
     }
 
-    public Order(PlaceOrderDto orderDto, User user, String sessionId){
-        this.user = user;
-        this.createdDate = new Date();
-        this.totalPrice = orderDto.getTotalPrice();
-        this.sessionId = sessionId;
-    }
 
     public List<OrderItem> getOrderItems() {
         return orderItems;
