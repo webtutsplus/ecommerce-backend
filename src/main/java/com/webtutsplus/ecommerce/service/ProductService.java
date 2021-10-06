@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
+
     @Autowired
     private ProductRepository productRepository;
 
@@ -33,7 +34,12 @@ public class ProductService {
     }
 
     public static Product getProductFromDto(ProductDto productDto, Category category) {
-        Product product = new Product(productDto, category);
+        Product product = new Product();
+        product.setCategory(category);
+        product.setDescription(productDto.getDescription());
+        product.setImageURL(productDto.getImageURL());
+        product.setPrice(productDto.getPrice());
+        product.setName(productDto.getName());
         return product;
     }
 

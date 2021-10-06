@@ -16,14 +16,17 @@ public class AuthenticationService {
     @Autowired
     TokenRepository repository;
 
+    // save the confirmation token
     public void saveConfirmationToken(AuthenticationToken authenticationToken) {
         repository.save(authenticationToken);
     }
 
+    // get token of the User
     public AuthenticationToken getToken(User user) {
         return repository.findTokenByUser(user);
     }
 
+    // get Uer from the token
     public User getUser(String token) {
         AuthenticationToken authenticationToken = repository.findTokenByToken(token);
         if (Helper.notNull(authenticationToken)) {
@@ -34,6 +37,7 @@ public class AuthenticationService {
         return null;
     }
 
+    // check if the token is valid
     public void authenticate(String token) throws AuthenticationFailException {
         if (!Helper.notNull(token)) {
             throw new AuthenticationFailException(MessageStrings.AUTH_TOEKN_NOT_PRESENT);

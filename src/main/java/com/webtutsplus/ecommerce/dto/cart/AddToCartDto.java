@@ -1,7 +1,5 @@
 package com.webtutsplus.ecommerce.dto.cart;
 
-import com.webtutsplus.ecommerce.model.Cart;
-
 import javax.validation.constraints.NotNull;
 
 public class AddToCartDto {
@@ -11,8 +9,6 @@ public class AddToCartDto {
 
     public AddToCartDto() {
     }
-
-
 
     @Override
     public String toString() {

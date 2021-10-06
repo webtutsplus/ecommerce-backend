@@ -73,16 +73,16 @@ public class UserService {
         }
     }
 
-    public SignInResponseDto signIn(SignInDto signInDto) throws CustomException {
+    public SignInResponseDto signIn(SignInDto signInDto) throws CustomException, AuthenticationFailException {
         // first find User by email
         User user = userRepository.findByEmail(signInDto.getEmail());
         if(!Helper.notNull(user)){
-            throw  new AuthenticationFailException("user not present");
+            throw new AuthenticationFailException("user not present");
         }
         try {
             // check if password is right
             if (!user.getPassword().equals(hashPassword(signInDto.getPassword()))){
-                // passowrd doesnot match
+                // passwords do not match
                 throw  new AuthenticationFailException(MessageStrings.WRONG_PASSWORD);
             }
         } catch (NoSuchAlgorithmException e) {

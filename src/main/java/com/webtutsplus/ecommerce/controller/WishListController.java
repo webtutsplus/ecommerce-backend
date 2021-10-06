@@ -3,6 +3,7 @@ package com.webtutsplus.ecommerce.controller;
 
 import com.webtutsplus.ecommerce.common.ApiResponse;
 import com.webtutsplus.ecommerce.dto.product.ProductDto;
+import com.webtutsplus.ecommerce.exceptions.AuthenticationFailException;
 import com.webtutsplus.ecommerce.model.Product;
 import com.webtutsplus.ecommerce.model.User;
 import com.webtutsplus.ecommerce.model.WishList;
@@ -29,6 +30,23 @@ public class WishListController {
         @Autowired
         private AuthenticationService authenticationService;
 
+        /*
+         API to add a new product in wishlist
+         */
+        @PostMapping("/add")
+        public ResponseEntity<ApiResponse> addWishList(@RequestBody Product product, @RequestParam("token") String token) throws AuthenticationFailException {
+                // first authenticate if the token is valid
+                authenticationService.authenticate(token);
+                // then fetch the user linked to the token
+                User user = authenticationService.getUser(token);
+
+                // save wish list
+                WishList wishList = new WishList(user, product);
+                wishListService.createWishlist(wishList);
+
+                return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Added to wishlist"), HttpStatus.CREATED);
+        }
+
         @GetMapping("/{token}")
         public ResponseEntity<List<ProductDto>> getWishList(@PathVariable("token") String token) {
                 int user_id = authenticationService.getUser(token).getId();
@@ -39,16 +57,6 @@ public class WishListController {
                 }
 
                 return new ResponseEntity<List<ProductDto>>(products, HttpStatus.OK);
-        }
-
-        @PostMapping("/add")
-        public ResponseEntity<ApiResponse> addWishList(@RequestBody Product product, @RequestParam("token") String token) {
-                authenticationService.authenticate(token);
-                User user = authenticationService.getUser(token);
-                WishList wishList = new WishList(user, product);
-                wishListService.createWishlist(wishList);
-                return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Add to wishlist"), HttpStatus.CREATED);
-
         }
 
 

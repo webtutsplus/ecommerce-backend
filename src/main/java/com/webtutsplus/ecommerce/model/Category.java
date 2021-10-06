@@ -19,7 +19,6 @@ public class Category {
 
 	private @NotBlank String imageUrl;
 
-	// add imageURL here
 
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY,
 			cascade = CascadeType.ALL)

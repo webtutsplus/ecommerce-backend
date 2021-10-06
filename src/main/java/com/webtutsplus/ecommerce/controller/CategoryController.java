@@ -25,7 +25,7 @@ public class CategoryController {
 	@GetMapping("/")
     public ResponseEntity<List<Category>> getCategories() {
         List<Category> body = categoryService.listCategories();
-        return new ResponseEntity<List<Category>>(body, HttpStatus.OK);
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
 	@PostMapping("/create")
@@ -34,7 +34,7 @@ public class CategoryController {
 			return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category already exists"), HttpStatus.CONFLICT);
 		}
 		categoryService.createCategory(category);
-		return new ResponseEntity<ApiResponse>(new ApiResponse(true, "created the category"), HttpStatus.CREATED);
+		return new ResponseEntity<>(new ApiResponse(true, "created the category"), HttpStatus.CREATED);
 	}
 
 	//TODO create an UPDATE method Giridhar
@@ -48,6 +48,6 @@ public class CategoryController {
 		}
 
 		// If the category doesn't exist then return a response of unsuccessful.
-		return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category does not exist"), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(new ApiResponse(false, "category does not exist"), HttpStatus.NOT_FOUND);
 	}
 }

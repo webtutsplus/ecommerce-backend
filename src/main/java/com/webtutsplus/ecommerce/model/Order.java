@@ -1,6 +1,5 @@
 package com.webtutsplus.ecommerce.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.webtutsplus.ecommerce.dto.order.PlaceOrderDto;
 
@@ -16,7 +15,6 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
 
     @Column(name = "created_date")
     private Date createdDate;

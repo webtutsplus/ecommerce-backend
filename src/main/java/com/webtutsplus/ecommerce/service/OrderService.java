@@ -10,6 +10,7 @@ import com.webtutsplus.ecommerce.dto.checkout.CheckoutItemDto;
 import com.webtutsplus.ecommerce.dto.order.PlaceOrderDto;
 import com.webtutsplus.ecommerce.exceptions.OrderNotFoundException;
 import com.webtutsplus.ecommerce.model.*;
+import com.webtutsplus.ecommerce.repository.OrderItemsRepository;
 import com.webtutsplus.ecommerce.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,9 @@ public class OrderService {
 
     @Autowired
     OrderItemsService orderItemsService;
+
+    @Autowired
+    private OrderItemsRepository orderItemsRepository;
 
     @Value("${BASE_URL}")
     private String baseURL;

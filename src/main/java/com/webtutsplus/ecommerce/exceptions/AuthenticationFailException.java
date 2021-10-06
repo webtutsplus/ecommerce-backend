@@ -1,6 +1,6 @@
 package com.webtutsplus.ecommerce.exceptions;
 
-public class AuthenticationFailException extends IllegalArgumentException {
+public class AuthenticationFailException extends Exception {
     public AuthenticationFailException(String msg) {
         super(msg);
     }
