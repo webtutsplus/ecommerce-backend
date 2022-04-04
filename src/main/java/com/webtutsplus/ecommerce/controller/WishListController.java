@@ -22,34 +22,56 @@ import java.util.List;
 @RestController
 @RequestMapping("/wishlist")
 public class WishListController {
+    @Autowired
+    WishListService wishListService;
 
-        @Autowired
-        private WishListService wishListService;
+    @Autowired
+    AuthenticationService authenticationService;
 
-        @Autowired
-        private AuthenticationService authenticationService;
 
-        @GetMapping("/{token}")
-        public ResponseEntity<List<ProductDto>> getWishList(@PathVariable("token") String token) {
-                int user_id = authenticationService.getUser(token).getId();
-                List<WishList> body = wishListService.readWishList(user_id);
-                List<ProductDto> products = new ArrayList<ProductDto>();
-                for (WishList wishList : body) {
-                        products.add(ProductService.getDtoFromProduct(wishList.getProduct()));
-                }
+    // save product as wishlist item
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse> addToWishList(@RequestBody Product product,
+                                                     @RequestParam("token") String token) {
+        // authenticate the token
+        authenticationService.authenticate(token);
 
-                return new ResponseEntity<List<ProductDto>>(products, HttpStatus.OK);
-        }
 
-        @PostMapping("/add")
-        public ResponseEntity<ApiResponse> addWishList(@RequestBody Product product, @RequestParam("token") String token) {
-                authenticationService.authenticate(token);
-                User user = authenticationService.getUser(token);
-                WishList wishList = new WishList(user, product);
-                wishListService.createWishlist(wishList);
-                return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Add to wishlist"), HttpStatus.CREATED);
+        // find the user
 
-        }
+        User user = authenticationService.getUser(token);
+
+        // save the item in wishlist
+
+        WishList wishList = new WishList(user, product);
+
+        wishListService.createWishlist(wishList);
+
+        ApiResponse apiResponse = new ApiResponse(true, "Added to wishlist");
+        return  new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
+
+    }
+
+
+    // get all wishlist item for a user
+
+    @GetMapping("/{token}")
+    public ResponseEntity<List<ProductDto>> getWishList(@PathVariable("token") String token) {
+
+        // authenticate the token
+        authenticationService.authenticate(token);
+
+
+        // find the user
+
+        User user = authenticationService.getUser(token);
+
+        List<ProductDto> productDtos = wishListService.getWishListForUser(user);
+
+        return new ResponseEntity<>(productDtos, HttpStatus.OK);
+
+    }
+
 
 
 }

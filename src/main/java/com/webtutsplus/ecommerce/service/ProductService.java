@@ -32,6 +32,17 @@ public class ProductService {
         return productDto;
     }
 
+    public ProductDto getProductDto(Product product) {
+        ProductDto productDto = new ProductDto();
+        productDto.setDescription(product.getDescription());
+        productDto.setImageURL(product.getImageURL());
+        productDto.setName(product.getName());
+        productDto.setCategoryId(product.getCategory().getId());
+        productDto.setPrice(product.getPrice());
+        productDto.setId(product.getId());
+        return productDto;
+    }
+
     public static Product getProductFromDto(ProductDto productDto, Category category) {
         Product product = new Product(productDto, category);
         return product;

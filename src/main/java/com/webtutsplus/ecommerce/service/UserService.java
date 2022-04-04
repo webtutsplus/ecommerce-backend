@@ -55,7 +55,7 @@ public class UserService {
         }
 
 
-        User user = new User(signupDto.getFirstName(), signupDto.getLastName(), signupDto.getEmail(), Role.user, encryptedPassword );
+        User user = new User(signupDto.getFirstName(), signupDto.getLastName(), signupDto.getEmail(), encryptedPassword );
 
         User createdUser;
         try {
@@ -111,51 +111,4 @@ public class UserService {
         return myHash;
     }
 
-    public ResponseDto createUser(String token, UserCreateDto userCreateDto) throws CustomException, AuthenticationFailException {
-        User creatingUser = authenticationService.getUser(token);
-        if (!canCrudUser(creatingUser.getRole())) {
-            // user can't create new user
-            throw  new AuthenticationFailException(MessageStrings.USER_NOT_PERMITTED);
-        }
-        String encryptedPassword = userCreateDto.getPassword();
-        try {
-            encryptedPassword = hashPassword(userCreateDto.getPassword());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            logger.error("hashing password failed {}", e.getMessage());
-        }
-
-        User user = new User(userCreateDto.getFirstName(), userCreateDto.getLastName(), userCreateDto.getEmail(), userCreateDto.getRole(), encryptedPassword );
-        User createdUser;
-        try {
-            createdUser = userRepository.save(user);
-            final AuthenticationToken authenticationToken = new AuthenticationToken(createdUser);
-            authenticationService.saveConfirmationToken(authenticationToken);
-            return new ResponseDto(ResponseStatus.success.toString(), USER_CREATED);
-        } catch (Exception e) {
-            // handle user creation fail error
-            throw new CustomException(e.getMessage());
-        }
-
-    }
-
-    boolean canCrudUser(Role role) {
-        if (role == Role.admin || role == Role.manager) {
-            return true;
-        }
-        return false;
-    }
-
-    boolean canCrudUser(User userUpdating, Integer userIdBeingUpdated) {
-        Role role = userUpdating.getRole();
-        // admin and manager can crud any user
-        if (role == Role.admin || role == Role.manager) {
-            return true;
-        }
-        // user can update his own record, but not his role
-        if (role == Role.user && userUpdating.getId() == userIdBeingUpdated) {
-            return true;
-        }
-        return false;
-    }
 }

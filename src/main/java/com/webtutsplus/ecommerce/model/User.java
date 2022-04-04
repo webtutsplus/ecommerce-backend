@@ -23,10 +23,6 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private Role role;
-
     @Column(name = "password")
     private String password;
 
@@ -67,14 +63,6 @@ public class User {
         this.email = email;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -83,11 +71,10 @@ public class User {
         this.password = password;
     }
 
-    public User(String firstName, String lastName, String email, Role role, String password) {
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.role = role;
         this.password = password;
     }
 
